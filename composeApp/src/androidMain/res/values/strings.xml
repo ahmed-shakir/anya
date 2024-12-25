@@ -1,0 +1,7 @@
+<resources>
+    <!-- App texts -->
+    <string name="app_name">Anya</string>
+    <string name="app_version">Version: %s</string>
+    <string name="device">Platform: %s</string>
+    <string name="created_by">Made by Supernova Technology AB</string>
+</resources>

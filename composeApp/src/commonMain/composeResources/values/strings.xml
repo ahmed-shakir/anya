@@ -1,0 +1,48 @@
+<resources>
+    <!-- App texts -->
+    <string name="app_name">Anya</string>
+    <string name="app_version">Version: %1$s</string>
+    <string name="device">Platform: %1$s</string>
+    <string name="created_by">Made by Supernova Technology AB</string>
+
+    <!-- Common icon description -->
+    <string name="logo_description">Anya app logo</string>
+
+    <!-- Common action icon description -->
+    <string name="back_action_icon_description">Back icon</string>
+    <string name="info_action_icon_description">Info button</string>
+    <string name="search_action_icon_description">Search button</string>
+    <string name="clear_field_action_icon_description">Clear field</string>
+    <string name="date_picker_action_icon_description">Date picker button</string>
+    <string name="show_password_action_icon_description">Show password</string>
+    <string name="hide_password_action_icon_description">Hide password</string>
+
+    <!-- Error texts -->
+    <string name="error_conflict">There is request conflict.</string>
+    <string name="error_payload_too_large">The request payload is too large.</string>
+    <string name="error_unauthorized">Your unauthorized to perform the request.</string>
+    <string name="error_no_internet">Couldn\'t connect to server, please check your internet connection.</string>
+    <string name="error_request_timeout">The request timed out.</string>
+    <string name="error_serialization">Couldn\'t serialize or deserialize data.</string>
+    <string name="error_too_many_requests">Oops, it seems like your quota is exceeded.</string>
+    <string name="error_unknown">Something went wrong. Please try again later.</string>
+
+    <!-- Validation texts -->
+    <string name="validation_date_format">Invalid date format</string>
+
+    <!-- Open screens - unauthenticated mode -->
+    <string name="screen_Welcome_action_start_label">Start</string>
+
+    <string name="screen_Info_title">About Anya app</string>
+    <string name="screen_Info_text_quote">Get to know Anya</string>
+
+    <string name="screen_Start_action_censor_label">Censor text</string>
+
+    <string name="screen_CensoredText_title">About Anya app</string>
+    <string name="screen_CensoredText_textField_label">Uncensored text</string>
+    <string name="screen_CensoredText_action_censor_label">Censor</string>
+    <string name="screen_CensoredText_counter_text">This feature was used %1$d times</string>
+
+    <!-- Secure screens - authenticated mode -->
+
+</resources>
