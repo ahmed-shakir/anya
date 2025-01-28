@@ -7,15 +7,19 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 import se.supernovait.anya.app.presentation.censored_text.CensoredTextScreen
-import se.supernovait.anya.app.presentation.censored_text.CensoredTextState
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextViewModel
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.start.StartScreen
@@ -23,6 +27,8 @@ import se.supernovait.anya.app.presentation.start.StartScreenAction
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
 import se.supernovait.anya.core.domain.util.DeviceManager
+import se.supernovait.anya.core.presentation.util.ObserveAsEvents
+import se.supernovait.anya.core.presentation.util.asString
 
 /**
  * Scaffold allows you to implement a UI with the basic Material Design layout structure.
@@ -31,6 +37,7 @@ import se.supernovait.anya.core.domain.util.DeviceManager
 @Composable
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val deviceManager: DeviceManager = koinInject<DeviceManager>()
+    val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = AnyaRoute.parse(backStackEntry?.destination?.route, AnyaRoute.getStartScreen(false))
@@ -76,8 +83,20 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 })
             }
             composable<AnyaRoute.CensoredText> {
-                val censoredTextUiState = CensoredTextState()
-                CensoredTextScreen(state = censoredTextUiState, onAction = { })
+                val censoredTextViewModel: CensoredTextViewModel = koinViewModel<CensoredTextViewModel>()
+                val censoredTextUiState by censoredTextViewModel.uiState.collectAsStateWithLifecycle()
+
+                ObserveAsEvents(events = censoredTextViewModel.events) { event ->
+                    when(event) {
+                        is AnyaEvent.Error -> {
+                            scope.launch {
+                                snackbarHostState.showSnackbar(event.error.asString())
+                            }
+                        }
+                    }
+                }
+
+                CensoredTextScreen(state = censoredTextUiState, onAction = censoredTextViewModel::onAction)
             }
         }
     }
