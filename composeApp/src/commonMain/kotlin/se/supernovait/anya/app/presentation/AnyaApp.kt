@@ -15,10 +15,12 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import org.koin.compose.koinInject
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
+import se.supernovait.anya.core.domain.util.DeviceManager
 
 /**
  * Scaffold allows you to implement a UI with the basic Material Design layout structure.
@@ -26,6 +28,7 @@ import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
  */
 @Composable
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
+    val deviceManager: DeviceManager = koinInject<DeviceManager>()
     val snackbarHostState = remember { SnackbarHostState() }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentScreen = AnyaRoute.parse(backStackEntry?.destination?.route, AnyaRoute.getStartScreen(false))
@@ -56,7 +59,12 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 })
             }
             composable<AnyaRoute.Info> {
-                InfoScreen(uiState = InfoScreenState())
+                InfoScreen(
+                    uiState = InfoScreenState(
+                        platform = deviceManager.getPlatform(),
+                        batteryLevel = "${deviceManager.getBatteryLevel()}%"
+                    )
+                )
             }
             composable<AnyaRoute.Start> {
                 Column(modifier = Modifier.padding(innerPadding)) {
