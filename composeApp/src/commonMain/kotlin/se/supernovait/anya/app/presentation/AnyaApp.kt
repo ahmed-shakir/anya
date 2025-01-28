@@ -1,11 +1,9 @@
 package se.supernovait.anya.app.presentation
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -16,6 +14,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextScreen
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextState
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.start.StartScreen
@@ -76,9 +76,8 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 })
             }
             composable<AnyaRoute.CensoredText> {
-                Column {
-                    Text("Anya Censored Text Screen")
-                }
+                val censoredTextUiState = CensoredTextState()
+                CensoredTextScreen(state = censoredTextUiState, onAction = { })
             }
         }
     }
