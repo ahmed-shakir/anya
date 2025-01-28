@@ -15,6 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import se.supernovait.anya.app.presentation.info.InfoScreen
+import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
 
@@ -54,9 +56,7 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 })
             }
             composable<AnyaRoute.Info> {
-                Column(modifier = Modifier.padding(innerPadding)) {
-                    Text("Anya Info Screen")
-                }
+                InfoScreen(uiState = InfoScreenState())
             }
             composable<AnyaRoute.Start> {
                 Column(modifier = Modifier.padding(innerPadding)) {
