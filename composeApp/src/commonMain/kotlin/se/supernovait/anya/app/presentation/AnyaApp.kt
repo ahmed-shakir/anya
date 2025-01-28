@@ -18,6 +18,8 @@ import androidx.navigation.compose.rememberNavController
 import org.koin.compose.koinInject
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
+import se.supernovait.anya.app.presentation.start.StartScreen
+import se.supernovait.anya.app.presentation.start.StartScreenAction
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
 import se.supernovait.anya.core.domain.util.DeviceManager
@@ -67,8 +69,15 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 )
             }
             composable<AnyaRoute.Start> {
-                Column(modifier = Modifier.padding(innerPadding)) {
-                    Text("Anya Start Screen")
+                StartScreen(onAction = { action ->
+                    when(action) {
+                        StartScreenAction.OnCensoredTextButtonClick -> navController.navigate(AnyaRoute.CensoredText)
+                    }
+                })
+            }
+            composable<AnyaRoute.CensoredText> {
+                Column {
+                    Text("Anya Censored Text Screen")
                 }
             }
         }
