@@ -15,6 +15,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
+import se.supernovait.anya.app.presentation.welcome.WelcomeScreenAction
 
 /**
  * Scaffold allows you to implement a UI with the basic Material Design layout structure.
@@ -41,8 +43,24 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
         innerPadding ->
         NavHost(navController = navController, startDestination = AnyaRoute.getStartScreen(false), modifier = Modifier.padding(innerPadding)) {
             composable<AnyaRoute.Welcome> {
+                WelcomeScreen(onAction = { action ->
+                    when(action) {
+                        WelcomeScreenAction.OnStartButtonClick -> {
+                            navController.popBackStack()
+                            navController.navigate(AnyaRoute.Start)
+                        }
+                        WelcomeScreenAction.OnInfoButtonClick -> navController.navigate(AnyaRoute.Info)
+                    }
+                })
+            }
+            composable<AnyaRoute.Info> {
                 Column(modifier = Modifier.padding(innerPadding)) {
-                    Text("Welcome to Anya")
+                    Text("Anya Info Screen")
+                }
+            }
+            composable<AnyaRoute.Start> {
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    Text("Anya Start Screen")
                 }
             }
         }

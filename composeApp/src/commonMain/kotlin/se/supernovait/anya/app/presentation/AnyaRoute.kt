@@ -10,6 +10,8 @@ interface ParameterizedRoute {
 @Serializable
 sealed class AnyaRoute(val useTopBar: Boolean = true, val useBottomBar: Boolean = false) : ParameterizedRoute {
     @Serializable
+    data object Info: AnyaRoute()
+    @Serializable
     data object Start : AnyaRoute(useTopBar = false, useBottomBar = true)
     @Serializable
     data object Welcome : AnyaRoute(useTopBar = false)
@@ -21,6 +23,7 @@ sealed class AnyaRoute(val useTopBar: Boolean = true, val useBottomBar: Boolean 
 
         fun parse(route: String?, defaultRoute: AnyaRoute = Welcome): AnyaRoute {
             return when (route?.substringBefore("?")) {
+                Info::class.qualifiedName -> Info
                 Start::class.qualifiedName -> Start
                 Welcome::class.qualifiedName -> Welcome
                 else -> defaultRoute
