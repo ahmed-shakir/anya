@@ -3,21 +3,48 @@ package se.supernovait.anya.app.presentation
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 
 /**
  * Scaffold allows you to implement a UI with the basic Material Design layout structure.
  * Scaffold provides slots for the most common top-level Material components, such as TopAppBar, BottomAppBar, FloatingActionButton, and Drawer.
  */
 @Composable
-fun AnyaApp() {
+fun AnyaApp(navController: NavHostController = rememberNavController()) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentScreen = AnyaRoute.parse(backStackEntry?.destination?.route, AnyaRoute.getStartScreen(false))
 
-    Scaffold(topBar = { TopBar(canNavigateBack = false) }) {
+    Scaffold(
+        snackbarHost = {
+            SnackbarHost(hostState = snackbarHostState)
+        },
+        topBar = {
+            if (currentScreen.useTopBar) {
+                TopBar(
+                    canNavigateBack = navController.previousBackStackEntry != null,
+                    navigateUp = { navController.navigateUp() })
+            }
+        }
+    ) {
         innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding)) {
-            Text("Welcome to Anya")
+        NavHost(navController = navController, startDestination = AnyaRoute.getStartScreen(false), modifier = Modifier.padding(innerPadding)) {
+            composable<AnyaRoute.Welcome> {
+                Column(modifier = Modifier.padding(innerPadding)) {
+                    Text("Welcome to Anya")
+                }
+            }
         }
     }
 }
