@@ -1,10 +1,7 @@
 package se.supernovait.anya.app.util
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
@@ -19,7 +16,9 @@ actual abstract class AnyaBaseTest actual constructor() : KoinTest {
 
     @BeforeTest
     actual fun startTestKoin() {
-        Dispatchers.setMain(testDispatcher)
+        // On iOS, we avoid setMain(testDispatcher) for UI tests to prevent deadlocks
+        // with the native main loop used by runComposeUiTest.
+        // ViewModels will use the native Dispatchers.Main.
         startKoin {
             modules(getTestModule())
         }
@@ -28,10 +27,11 @@ actual abstract class AnyaBaseTest actual constructor() : KoinTest {
     @AfterTest
     actual fun stopTestKoin() {
         stopKoin()
-        Dispatchers.resetMain()
     }
 
     actual fun advanceTime() {
+        // Since we don't setMain, this only advances the local testDispatcher.
+        // For UI tests, rely on Compose's internal waiting or yield().
         testDispatcher.scheduler.advanceUntilIdle()
     }
 }

@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import se.supernovait.anya.app.domain.app.theme.AnyaTheme
+import se.supernovait.anya.app.presentation.app.theme.AnyaTheme
 
 @Composable
 fun ScreenPreviewContainer(content: @Composable () -> Unit) {
