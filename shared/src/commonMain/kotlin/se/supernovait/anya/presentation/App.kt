@@ -1,4 +1,4 @@
-package se.supernovait.anya
+package se.supernovait.anya.presentation
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
