@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import se.supernovait.anya.app.presentation.App
+import se.supernovait.anya.app.presentation.app.App
 import se.supernovait.anya.core.presentation.common.preview.ScreenPreviewContainer
 
 class MainActivity : ComponentActivity() {

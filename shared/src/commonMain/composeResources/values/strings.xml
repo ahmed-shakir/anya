@@ -4,4 +4,16 @@
 
     <string name="app_logo_description">App logo</string>
 
+    <!-- Error texts -->
+    <string name="error_bad_request">The request contains errors.</string>
+    <string name="error_conflict">There is a request conflict.</string>
+    <string name="error_no_internet">Couldn't connect to server, please check your internet connection.</string>
+    <string name="error_payload_too_large">The request payload is too large.</string>
+    <string name="error_request_timeout">The request timed out.</string>
+    <string name="error_serialization">Couldn't serialize or deserialize data.</string>
+    <string name="error_too_many_requests">Oops, it seems like your quota is exceeded.</string>
+    <string name="error_unauthenticated">You're not authenticated, please sign in.</string>
+    <string name="error_unauthorized">You're not authorized to perform the request.</string>
+    <string name="error_unknown">Something went wrong. Please try again later.</string>
+
 </resources>

@@ -1,7 +1,7 @@
 package se.supernovait.anya
 
 import androidx.compose.ui.window.ComposeUIViewController
-import se.supernovait.anya.app.presentation.App
+import se.supernovait.anya.app.presentation.app.App
 import se.supernovait.anya.di.initKoin
 
 /**
