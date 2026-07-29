@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.androidx.room)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -53,12 +56,12 @@ kotlin {
             api(libs.kotlinx.datetime)
             api(libs.androidx.datastore)
             api(libs.androidx.datastore.preferences)
+            api(libs.androidx.room.runtime)
             api(libs.koin.core)
 
             implementation(libs.androidx.lifecycle.viewmodel.compose)
             implementation(libs.androidx.lifecycle.runtime.compose)
-            // TODO: add implementation(libs.androidx.navigation.compose)
-            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.sqlite.bundled)
 
             implementation(libs.compose.runtime)
@@ -75,10 +78,32 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
+            implementation(libs.kotlinx.coroutines.test)
+            implementation(libs.turbine)
+            implementation(libs.ktor.client.mock)
+            implementation(libs.compose.ui.test)
+            implementation(libs.koin.test)
+            implementation(libs.compose.components.resources)
+        }
+        val androidHostTest by getting {
+            dependencies {
+                implementation(libs.androidx.test.core)
+                implementation(libs.compose.ui.test.junit4)
+                implementation(libs.robolectric)
+                runtimeOnly(libs.compose.ui.test.manifest)
+            }
         }
     }
 }
 
+room {
+    schemaDirectory("$projectDir/schemas")
+}
+
 dependencies {
+    add("kspAndroid", libs.androidx.room.compiler)
+    add("kspIosArm64", libs.androidx.room.compiler)
+    add("kspIosSimulatorArm64", libs.androidx.room.compiler)
+
     androidRuntimeClasspath(libs.compose.ui.tooling)
 }
