@@ -1,4 +1,3 @@
-
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
@@ -19,7 +18,7 @@ kotlin {
         }
     }
     
-    androidLibrary {
+    android {
        namespace = "se.supernovait.anya.shared"
        compileSdk = libs.versions.android.compileSdk.get().toInt()
        minSdk = libs.versions.android.minSdk.get().toInt()
@@ -41,15 +40,17 @@ kotlin {
             implementation(libs.androidx.core.splashscreen)
             implementation(libs.androidx.activity.compose)
             implementation(libs.compose.ui.tooling.preview)
-            implementation(libs.ktor.client.okhttp)
+
             implementation(libs.koin.android)
             implementation(libs.koin.androidx.compose)
+            implementation(libs.ktor.client.okhttp)
             implementation(libs.accompanist.permissions)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
         }
         commonMain.dependencies {
+            api(libs.kotlinx.datetime)
             api(libs.androidx.datastore)
             api(libs.androidx.datastore.preferences)
             api(libs.koin.core)
