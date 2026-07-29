@@ -1,4 +1,4 @@
-package se.supernovait.anya.app.presentation.app.theme
+package se.supernovait.anya.app.domain.app.theme
 
 import androidx.compose.ui.graphics.Color
 

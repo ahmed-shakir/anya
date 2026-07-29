@@ -1,4 +1,4 @@
-package se.supernovait.anya.app.presentation.app.theme
+package se.supernovait.anya.app.domain.app.theme
 
 data object SpacingDefaults {
     internal const val DIVIDER = 1
