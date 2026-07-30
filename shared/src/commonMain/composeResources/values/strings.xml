@@ -143,9 +143,12 @@
     <string name="screen_Start_action_censor_content_description">Action to navigate to censor text page</string>
 
     <!-- Owner Screen -->
+    <string name="screen_Owner_image_description">Owner image</string>
     <string name="screen_Owner_form_firstname_label">Firstname</string>
     <string name="screen_Owner_form_lastname_label">Lastname</string>
+    <string name="screen_Owner_form_full_name_label">Name</string>
     <string name="screen_Owner_form_username_label">Username</string>
     <string name="screen_Owner_form_dob_label">Date of Birth</string>
+    <string name="screen_Owner_section_personal_details_title">Personal details</string>
 
 </resources>

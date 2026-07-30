@@ -36,6 +36,9 @@ import se.supernovait.anya.app.presentation.app.topbar.TopBarState
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.navigation.Route
+import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
+import se.supernovait.anya.app.presentation.owner.screen.OwnerProfileScreen
+import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
 import se.supernovait.anya.app.presentation.start.StartScreen
 import se.supernovait.anya.app.presentation.start.StartScreenEvent
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
@@ -157,7 +160,14 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
 
                 composable<Route.OwnerProfile> {
-                    Text("Route.OwnerProfile")
+                    // TODO: add viewmodel and pass in uiState
+                    OwnerProfileScreen(uiState = OwnerScreenState(), onEvent = { event ->
+                        when(event) {
+                            is OwnerScreenEvent.NavigateToCats -> navController.navigate(Route.Cat(ownerId = event.ownerId))
+                            OwnerScreenEvent.SignOut -> authManager.logout()
+                            else -> { }
+                        }
+                    })
                 }
 
                 composable<Route.Cat> {
