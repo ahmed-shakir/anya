@@ -5,18 +5,33 @@ import kotlinx.serialization.Serializable
 sealed interface Route : NavigationRoute {
 
     @Serializable
-    data object Start : Route {
-        override val showTopBar = false
-        override val showBottomBar = true
-    }
-
-    @Serializable
     data object Welcome : Route {
         override val showTopBar = false
     }
 
     @Serializable
     data object Info: Route
+
+    @Serializable
+    data object Start : Route {
+        override val showTopBar = false
+        override val showBottomBar = true
+    }
+
+    @Serializable
+    data object CensoredText: Route
+
+    @Serializable
+    data object Owner: Route
+
+    @Serializable
+    data class OwnerProfile(val id: Long): Route
+
+    @Serializable
+    data class Cat(val ownerId: Long? = null): Route
+
+    @Serializable
+    data class CatProfile(val id: Long): Route
 
     companion object {
         fun startScreen(isAuthenticated: Boolean): Route {
@@ -26,9 +41,14 @@ sealed interface Route : NavigationRoute {
 
         fun parse(route: String?, defaultRoute: Route = Welcome): Route {
             return when (route?.substringBefore("/")?.substringBefore("?")) {
-                Start::class.qualifiedName -> Start
                 Welcome::class.qualifiedName -> Welcome
                 Info::class.qualifiedName -> Info
+                Start::class.qualifiedName -> Start
+                CensoredText::class.qualifiedName -> CensoredText
+                Owner::class.qualifiedName -> Owner
+                OwnerProfile::class.qualifiedName -> OwnerProfile(id = 0)
+                Cat::class.qualifiedName -> Cat()
+                CatProfile::class.qualifiedName -> CatProfile(id = 0)
                 else -> defaultRoute
             }
         }

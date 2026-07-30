@@ -34,6 +34,8 @@ import se.supernovait.anya.app.presentation.app.topbar.TopBarState
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.navigation.Route
+import se.supernovait.anya.app.presentation.start.StartScreen
+import se.supernovait.anya.app.presentation.start.StartScreenEvent
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreenEvent
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
@@ -98,6 +100,7 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                         }
                     })
                 }
+
                 composable<Route.Info> {
                     val networkStatusText = when(networkStatus?.type) {
                         NetworkStatusType.OFFLINE -> stringResource(Res.string.network_status_offline_label)
@@ -113,8 +116,38 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                         )
                     )
                 }
+
                 composable<Route.Start> {
-                    Text("Start Screen") // TODO: implement
+                    StartScreen(onEvent = { action ->
+                        when(action) {
+                            StartScreenEvent.NavigateToCatScreen -> navController.navigate(Route.Cat())
+                            StartScreenEvent.NavigateToCensoredTextScreen -> navController.navigate(Route.CensoredText)
+                            StartScreenEvent.NavigateToInfoScreen -> navController.navigate(Route.Info)
+                            StartScreenEvent.NavigateToOwnerScreen -> navController.navigate(Route.Owner)
+                            StartScreenEvent.NavigateToProfileScreen -> navController.navigate(Route.OwnerProfile(authManager.getCurrentUser()?.id ?: 0L))
+                            StartScreenEvent.SignOut -> authManager.logout()
+                        }
+                    })
+                }
+
+                composable<Route.CensoredText> {
+                    Text("Route.CensoredText")
+                }
+
+                composable<Route.Owner> {
+                    Text("Route.Owner")
+                }
+
+                composable<Route.OwnerProfile> {
+                    Text("Route.OwnerProfile")
+                }
+
+                composable<Route.Cat> {
+                    Text("Route.Cat")
+                }
+
+                composable<Route.CatProfile> {
+                    Text("Route.CatProfile")
                 }
             }
         }

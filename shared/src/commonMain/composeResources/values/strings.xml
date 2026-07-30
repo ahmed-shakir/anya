@@ -39,6 +39,9 @@
     <string name="network_status_restricted_label">Online (Restricted: %1$s)</string>
     <string name="network_status_loading_label">Loading...</string>
 
+    <!-- Authentication labels -->
+    <string name="auth_action_sign_out_label">Sign out</string>
+
     <!-- User profile labels -->
     <string name="user_profile_label">My Profile</string>
     <string name="user_profile_action_content_description">Action to navigate to profile</string>
@@ -107,6 +110,16 @@
     <!-- Info Screen -->
     <string name="screen_Info_title">About Anya app</string>
     <string name="screen_Info_text_quote">Get to know Anya</string>
+
+    <!-- Start Screen -->
+    <string name="screen_Start_action_cat_label">Cats</string>
+    <string name="screen_Start_action_cat_content_description">Action to navigate to cats page</string>
+    <string name="screen_Start_action_owner_label">Owners</string>
+    <string name="screen_Start_action_owner_content_description">Action to navigate to owners page</string>
+    <string name="screen_Start_action_info_label">About Anya</string>
+    <string name="screen_Start_action_info_content_description">Action to navigate to information page</string>
+    <string name="screen_Start_action_censor_label">Censor text</string>
+    <string name="screen_Start_action_censor_content_description">Action to navigate to censor text page</string>
 
     <!-- Owner Screen -->
     <string name="screen_Owner_form_firstname_label">Firstname</string>
