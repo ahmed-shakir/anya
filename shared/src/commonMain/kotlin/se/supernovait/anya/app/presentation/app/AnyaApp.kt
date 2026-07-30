@@ -1,6 +1,8 @@
 package se.supernovait.anya.app.presentation.app
 
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -42,6 +44,9 @@ import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
 import se.supernovait.anya.core.domain.manager.DeviceManager
 import se.supernovait.anya.core.domain.network.NetworkHandler
 import se.supernovait.anya.core.domain.network.NetworkStatusType
+import se.supernovait.anya.core.presentation.common.AnyaIcon
+import se.supernovait.anya.core.presentation.common.action.FabState
+import se.supernovait.anya.core.presentation.common.action.LocalFabState
 
 @Composable
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
@@ -51,6 +56,7 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val networkStatus by networkHandler.connectivity.collectAsStateWithLifecycle(null)
     val deviceManager: DeviceManager = koinInject<DeviceManager>()
     val topBarState = remember { TopBarState() }
+    val fabState = remember { FabState() }
     val snackbarHostState = remember { SnackbarHostState() }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val startScreen = Route.startScreen(authManager.isAuthenticated())
@@ -70,7 +76,8 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
 
     CompositionLocalProvider(
         LocalAuthState provides authState,
-        LocalTopBarState provides topBarState
+        LocalTopBarState provides topBarState,
+        LocalFabState provides fabState
     ) {
         Scaffold(
             snackbarHost = {
@@ -79,6 +86,17 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
             topBar = {
                 if (currentScreen.showTopBar) {
                     AppTopBar(state = topBarState, navigateUp = { navController.navigateUp() })
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            floatingActionButton = {
+                val icon = fabState.icon
+                val contentDescription = fabState.contentDescription
+                val onClick = fabState.onClick
+                if (icon != null && onClick != null) {
+                    FloatingActionButton(onClick = onClick) {
+                        AnyaIcon(icon = icon, contentDescription = contentDescription)
+                    }
                 }
             }
         ) { innerPadding ->
