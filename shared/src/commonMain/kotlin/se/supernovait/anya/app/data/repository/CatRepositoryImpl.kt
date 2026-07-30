@@ -32,6 +32,10 @@ class CatRepositoryImpl(
         return ownerDao.getAllOrderedByBirthdate()
     }
 
+    override suspend fun getOwnerById(id: Long): Owner? {
+        return ownerDao.getUserById(id)
+    }
+
     override suspend fun upsertOwner(owner: Owner) {
         withContext(ioContext) {
             ownerDao.upsert(owner)

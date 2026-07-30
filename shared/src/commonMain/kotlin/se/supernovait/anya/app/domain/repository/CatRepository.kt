@@ -8,6 +8,7 @@ interface CatRepository {
     fun getAllOwnersOrderedByFirstname(): Flow<List<Owner>>
     fun getAllOwnersOrderedByLastname(): Flow<List<Owner>>
     fun getAllOwnersOrderedByBirthdate(): Flow<List<Owner>>
+    suspend fun getOwnerById(id: Long): Owner?
     suspend fun upsertOwner(owner: Owner)
     suspend fun deleteOwner(owner: Owner)
 }

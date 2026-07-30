@@ -11,6 +11,7 @@ import se.supernovait.anya.app.fakes.FakeCatRepository
 import se.supernovait.anya.app.fakes.FakeDeviceManager
 import se.supernovait.anya.app.fakes.FakeNetworkHandler
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
+import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
 import se.supernovait.anya.core.domain.file.PdfViewer
 import se.supernovait.anya.core.domain.manager.DeviceManager
@@ -27,4 +28,5 @@ actual fun getTestModule() = module {
     single { Json { ignoreUnknownKeys = true; coerceInputValues = true } }
 
     viewModelOf(::WelcomeViewModel)
+    viewModelOf(::OwnerViewModel)
 }
