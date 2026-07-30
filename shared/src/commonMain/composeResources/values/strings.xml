@@ -88,8 +88,26 @@
     <string name="screen_Error_description">The service cannot be reached at the moment.</string>
     <string name="screen_Error_action_retry_label">Try again</string>
 
+    <!-- Welcome Screen -->
+    <string name="screen_Welcome_action_sign_up_label">Sign up</string>
+    <string name="screen_Welcome_action_sign_in_label">Sign in</string>
+    <string name="screen_Welcome_action_info_content_description">Info button</string>
+    <string name="screen_Welcome_sign_up_form_title">Sign up</string>
+    <string name="screen_Welcome_sign_up_form_action_save_label">Save &amp; sign in</string>
+    <string name="screen_Welcome_sign_up_form_content_description">Sign up form</string>
+    <string name="screen_Welcome_sign_in_form_title">Sign in</string>
+    <string name="screen_Welcome_sign_in_form_username_label">Username</string>
+    <string name="screen_Welcome_sign_in_form_action_sign_in_label">Sign in</string>
+    <string name="screen_Welcome_sign_in_form_content_description">Sign in form</string>
+
     <!-- Info Screen -->
     <string name="screen_Info_title">About Anya app</string>
     <string name="screen_Info_text_quote">Get to know Anya</string>
+
+    <!-- Owner Screen -->
+    <string name="screen_Owner_form_firstname_label">Firstname</string>
+    <string name="screen_Owner_form_lastname_label">Lastname</string>
+    <string name="screen_Owner_form_username_label">Username</string>
+    <string name="screen_Owner_form_dob_label">Date of Birth</string>
 
 </resources>

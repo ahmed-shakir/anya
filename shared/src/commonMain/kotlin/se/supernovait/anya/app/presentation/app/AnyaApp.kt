@@ -1,11 +1,6 @@
 package se.supernovait.anya.app.presentation.app
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -15,7 +10,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -24,23 +18,25 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import anya.shared.generated.resources.Res
-import anya.shared.generated.resources.app_icon
-import anya.shared.generated.resources.app_logo_content_description
 import anya.shared.generated.resources.network_status_loading_label
 import anya.shared.generated.resources.network_status_offline_label
 import anya.shared.generated.resources.network_status_online_label
 import anya.shared.generated.resources.network_status_restricted_label
-import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
+import org.koin.compose.viewmodel.koinViewModel
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
-import se.supernovait.anya.app.presentation.app.theme.spacing
+import se.supernovait.anya.app.presentation.app.auth.AuthenticationState
+import se.supernovait.anya.app.presentation.app.auth.LocalAuthState
 import se.supernovait.anya.app.presentation.app.topbar.AppTopBar
 import se.supernovait.anya.app.presentation.app.topbar.LocalTopBarState
 import se.supernovait.anya.app.presentation.app.topbar.TopBarState
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.navigation.Route
+import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
+import se.supernovait.anya.app.presentation.welcome.WelcomeScreenEvent
+import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
 import se.supernovait.anya.core.domain.manager.DeviceManager
 import se.supernovait.anya.core.domain.network.NetworkHandler
 import se.supernovait.anya.core.domain.network.NetworkStatusType
@@ -49,6 +45,7 @@ import se.supernovait.anya.core.domain.network.NetworkStatusType
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val authManager: AuthenticationManager = koinInject<AuthenticationManager>()
     val networkHandler: NetworkHandler = koinInject<NetworkHandler>()
+    val authState by authManager.authState.collectAsStateWithLifecycle()
     val networkStatus by networkHandler.connectivity.collectAsStateWithLifecycle(null)
     val deviceManager: DeviceManager = koinInject<DeviceManager>()
     val topBarState = remember { TopBarState() }
@@ -57,11 +54,20 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val startScreen = Route.startScreen(authManager.isAuthenticated())
     val currentScreen = Route.parse(backStackEntry?.destination?.route, startScreen)
 
+    LaunchedEffect(authState) {
+        if (authState is AuthenticationState.NotAuthenticated && currentScreen != Route.Welcome) {
+            navController.navigate(Route.Welcome) {
+                popUpTo(0) { inclusive = true }
+            }
+        }
+    }
+
     LaunchedEffect(Unit) {
         topBarState.reset()
     }
 
     CompositionLocalProvider(
+        LocalAuthState provides authState,
         LocalTopBarState provides topBarState
     ) {
         Scaffold(
@@ -76,20 +82,21 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
         ) { innerPadding ->
             NavHost(navController = navController, startDestination = startScreen, modifier = Modifier.padding(innerPadding)) {
                 composable<Route.Welcome> {
-                    // TODO: implement
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize().padding(innerPadding)
-                    ) {
-                        Image(
-                            painter = painterResource(Res.drawable.app_icon),
-                            contentDescription = stringResource(Res.string.app_logo_content_description),
-                            modifier = Modifier
-                                .fillMaxWidth(0.4f)
-                                .align(Alignment.CenterHorizontally)
-                                .padding(top = MaterialTheme.spacing.x3Large)
-                        )
-                    }
+                    val viewModel: WelcomeViewModel = koinViewModel<WelcomeViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(
+                        events = viewModel.events,
+                        snackbarHostState = snackbarHostState,
+                        navController = navController
+                    )
+
+                    WelcomeScreen(uiState = uiState, onEvent = { event ->
+                        when(event) {
+                            WelcomeScreenEvent.NavigateToInfo -> navController.navigate(Route.Info)
+                            else -> viewModel.onEvent(event)
+                        }
+                    })
                 }
                 composable<Route.Info> {
                     val networkStatusText = when(networkStatus?.type) {
