@@ -32,6 +32,7 @@
     <string name="a11y_password_field">Password field</string>
     <string name="a11y_button">Button</string>
     <string name="a11y_date_picker_dialog">Date picker dialog</string>
+    <string name="a11y_swipeable_list_item_with_actions">Swipeable list item with actions</string>
 
     <!-- NetworkHandler labels -->
     <string name="network_status_offline_label">Offline</string>
