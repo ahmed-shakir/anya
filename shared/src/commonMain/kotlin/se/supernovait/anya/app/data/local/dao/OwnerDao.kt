@@ -10,6 +10,9 @@ import se.supernovait.anya.app.data.local.entity.Owner
 @Dao
 interface OwnerDao {
 
+    @Query("SELECT COUNT(*) FROM owners")
+    suspend fun getOwnersCount(): Long
+
     @Query("SELECT * FROM owners")
     fun getAll(): Flow<List<Owner>>
 

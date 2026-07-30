@@ -23,6 +23,25 @@
     <string name="error_unauthorized">You're not authorized to perform the request.</string>
     <string name="error_unknown">Something went wrong. Please try again later.</string>
 
+    <string name="error_initialization_network_title">Network Error</string>
+    <string name="error_initialization_network_description">Unable to connect to the internet. You can try again or continue offline with cached data.</string>
+    <string name="error_initialization_network_action_primary_label">Retry</string>
+    <string name="error_initialization_network_action_secondary_label">Go Offline</string>
+
+    <string name="error_initialization_database_title">Database Error</string>
+    <string name="error_initialization_database_description">Unable to access app data. Try again or clear app data to start fresh.</string>
+    <string name="error_initialization_database_action_primary_label">Retry</string>
+    <string name="error_initialization_database_action_secondary_label">Clear App Data</string>
+
+    <string name="error_initialization_preferences_title">Configuration Error</string>
+    <string name="error_initialization_preferences_description">App configuration is corrupted. Try again or reset to defaults.</string>
+    <string name="error_initialization_preferences_action_primary_label">Retry</string>
+    <string name="error_initialization_preferences_action_secondary_label">Reset Settings</string>
+
+    <string name="error_initialization_unknown_title">Initialization Error</string>
+    <string name="error_initialization_unknown_description">An unexpected error occurred: %1$s</string>
+    <string name="error_initialization_unknown_action_primary_label">Retry</string>
+
     <!-- Error Screen -->
     <string name="screen_Error_title">There was a problem loading this page. Please try again.</string>
     <string name="screen_Error_description">The service cannot be reached at the moment.</string>

@@ -8,6 +8,7 @@ import se.supernovait.anya.app.data.local.entity.Owner
 class FakeOwnerDao : OwnerDao {
     private val owners = MutableStateFlow<List<Owner>>(emptyList())
 
+    override suspend fun getOwnersCount(): Long = owners.value.size.toLong()
     override fun getAll(): Flow<List<Owner>> = owners
     override suspend fun getUserById(id: Long): Owner? = owners.value.find { it.id == id }
     override suspend fun getUserByUsername(username: String): Owner? = owners.value.find { it.username == username }

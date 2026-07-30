@@ -4,6 +4,8 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import androidx.room.execSQL
+import androidx.room.useWriterConnection
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.local.entity.Owner
 
@@ -18,6 +20,18 @@ abstract class CatDatabase : RoomDatabase() {
 
     companion object {
         const val DATABASE_FILENAME = "cat.db"
+    }
+}
+
+/**
+ * Suspending version of clearAllTables for KMP.
+ */
+suspend fun CatDatabase.clearAllTablesKmp() {
+    useWriterConnection { connection ->
+        connection.execSQL("DELETE FROM owners")
+
+        // Reset autoincrement sequences
+        connection.execSQL("DELETE FROM sqlite_sequence WHERE name='owners'")
     }
 }
 
