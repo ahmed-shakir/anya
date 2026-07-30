@@ -23,13 +23,12 @@ import anya.shared.generated.resources.error_initialization_unknown_description
 import anya.shared.generated.resources.error_initialization_unknown_title
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.KoinContext
 import org.koin.compose.koinInject
 import se.supernovait.anya.app.domain.model.initialization.InitializationErrorType
-import se.supernovait.anya.core.domain.model.RecoveryOption
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializationState
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializer
 import se.supernovait.anya.app.presentation.app.theme.AnyaTheme
+import se.supernovait.anya.core.domain.model.RecoveryOption
 import se.supernovait.anya.core.presentation.common.error.ErrorScreen
 import se.supernovait.anya.core.presentation.common.error.ErrorScreenHandler
 import se.supernovait.anya.core.presentation.common.error.ErrorScreenState
@@ -38,9 +37,7 @@ import se.supernovait.anya.core.presentation.common.preview.ScreenPreviewContain
 @Composable
 fun App() {
     AnyaTheme {
-        KoinContext {
-            AppContent()
-        }
+        AppContent()
     }
 }
 

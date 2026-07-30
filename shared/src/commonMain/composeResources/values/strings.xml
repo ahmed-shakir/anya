@@ -11,6 +11,10 @@
     <!-- A11Y component -->
     <string name="a11y_button">Button</string>
 
+    <!-- TopBar labels -->
+    <string name="topbar_action_back_content_description">Navigate back button</string>
+    <string name="topbar_action_menu_content_description">Top bar menu button</string>
+
     <!-- Error texts -->
     <string name="error_bad_request">The request contains errors.</string>
     <string name="error_conflict">There is a request conflict.</string>
