@@ -4,6 +4,13 @@
 
     <string name="app_logo_description">App logo</string>
 
+    <!-- A11Y state -->
+    <string name="a11y_state_enabled">enabled</string>
+    <string name="a11y_state_disabled">disabled</string>
+
+    <!-- A11Y component -->
+    <string name="a11y_button">Button</string>
+
     <!-- Error texts -->
     <string name="error_bad_request">The request contains errors.</string>
     <string name="error_conflict">There is a request conflict.</string>
@@ -15,5 +22,10 @@
     <string name="error_unauthenticated">You're not authenticated, please sign in.</string>
     <string name="error_unauthorized">You're not authorized to perform the request.</string>
     <string name="error_unknown">Something went wrong. Please try again later.</string>
+
+    <!-- Error Screen -->
+    <string name="screen_Error_title">There was a problem loading this page. Please try again.</string>
+    <string name="screen_Error_description">The service cannot be reached at the moment.</string>
+    <string name="screen_Error_action_retry_label">Try again</string>
 
 </resources>
