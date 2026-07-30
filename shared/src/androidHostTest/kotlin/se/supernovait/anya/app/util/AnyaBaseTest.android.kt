@@ -11,13 +11,14 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import se.supernovait.anya.app.ShadowFileUtils
 import se.supernovait.anya.app.di.getTestModule
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
-@Config(sdk = [35])
+@Config(sdk = [35], shadows = [ShadowFileUtils::class])
 actual abstract class AnyaBaseTest actual constructor() : KoinTest {
 
     private val testDispatcher = StandardTestDispatcher()
