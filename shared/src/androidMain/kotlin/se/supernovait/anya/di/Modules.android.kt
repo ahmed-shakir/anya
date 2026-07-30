@@ -8,10 +8,16 @@ import se.supernovait.anya.app.data.database.DatabaseManager
 import se.supernovait.anya.app.data.local.CatDatabase
 import se.supernovait.anya.core.data.network.AndroidNetworkHandler
 import se.supernovait.anya.core.data.preferences.createDataStore
+import se.supernovait.anya.core.domain.manager.AndroidDeviceManager
+import se.supernovait.anya.core.domain.manager.DeviceManager
 import se.supernovait.anya.core.domain.network.NetworkHandler
 import se.supernovait.anya.core.domain.util.applicationContext
 
 actual val platformModule = module {
+
+    single<DeviceManager> {
+        AndroidDeviceManager(applicationContext)
+    }
 
     single<NetworkHandler> {
         AndroidNetworkHandler(context = applicationContext)
