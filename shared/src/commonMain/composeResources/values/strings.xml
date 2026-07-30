@@ -1,8 +1,13 @@
 <resources>
     <!-- App texts -->
     <string name="app_name">Anya</string>
+    <string name="app_version">Version: %1$s</string>
+    <string name="device">Platform: %1$s</string>
+    <string name="network_status">Network status: %1$s</string>
+    <string name="current_battery_level">Current battery level: %1$s</string>
+    <string name="created_by">Made by Ahmed Shakir</string>
 
-    <string name="app_logo_description">App logo</string>
+    <string name="app_logo_content_description">App logo</string>
 
     <!-- A11Y state -->
     <string name="a11y_state_enabled">enabled</string>
@@ -10,6 +15,12 @@
 
     <!-- A11Y component -->
     <string name="a11y_button">Button</string>
+
+    <!-- NetworkHandler labels -->
+    <string name="network_status_offline_label">Offline</string>
+    <string name="network_status_online_label">Online (%1$s)</string>
+    <string name="network_status_restricted_label">Online (Restricted: %1$s)</string>
+    <string name="network_status_loading_label">Loading...</string>
 
     <!-- TopBar labels -->
     <string name="topbar_action_back_content_description">Navigate back button</string>
@@ -50,5 +61,9 @@
     <string name="screen_Error_title">There was a problem loading this page. Please try again.</string>
     <string name="screen_Error_description">The service cannot be reached at the moment.</string>
     <string name="screen_Error_action_retry_label">Try again</string>
+
+    <!-- Info Screen -->
+    <string name="screen_Info_title">About Anya app</string>
+    <string name="screen_Info_text_quote">Get to know Anya</string>
 
 </resources>

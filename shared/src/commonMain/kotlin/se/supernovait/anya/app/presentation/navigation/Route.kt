@@ -15,6 +15,9 @@ sealed interface Route : NavigationRoute {
         override val showTopBar = false
     }
 
+    @Serializable
+    data object Info: Route
+
     companion object {
         fun startScreen(isAuthenticated: Boolean): Route {
             println("StartScreen - isAuthenticated: $isAuthenticated")
@@ -25,6 +28,7 @@ sealed interface Route : NavigationRoute {
             return when (route?.substringBefore("/")?.substringBefore("?")) {
                 Start::class.qualifiedName -> Start
                 Welcome::class.qualifiedName -> Welcome
+                Info::class.qualifiedName -> Info
                 else -> defaultRoute
             }
         }

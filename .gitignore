@@ -25,3 +25,4 @@ xcuserdata
 # Project Specific
 *.preferences_pb
 schemas/
+shared/${user.home}/

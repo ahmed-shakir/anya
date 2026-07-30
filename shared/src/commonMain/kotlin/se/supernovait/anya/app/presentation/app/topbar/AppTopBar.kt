@@ -19,7 +19,7 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import anya.shared.generated.resources.Res
-import anya.shared.generated.resources.app_logo_description
+import anya.shared.generated.resources.app_logo_content_description
 import anya.shared.generated.resources.ic_arrow_back
 import anya.shared.generated.resources.ic_more_vert
 import anya.shared.generated.resources.topbar_action_back_content_description
@@ -47,7 +47,7 @@ fun AppTopBar(state: TopBarState = TopBarState(), navigateUp: () -> Unit = { }, 
                 state.icon?.let {
                     AnyaIcon(
                         icon = it,
-                        contentDescription = Res.string.app_logo_description,
+                        contentDescription = Res.string.app_logo_content_description,
                         modifier = Modifier.size(MaterialTheme.spacing.iconLarge)
                     )
                 }
