@@ -46,6 +46,10 @@
     <string name="user_profile_label">My Profile</string>
     <string name="user_profile_action_content_description">Action to navigate to profile</string>
 
+    <!-- File upload labels -->
+    <string name="file_action_view_label">View file</string>
+    <string name="file_action_upload_label">Upload file</string>
+
     <!-- TopBar labels -->
     <string name="topbar_action_back_content_description">Navigate back button</string>
     <string name="topbar_action_menu_content_description">Top bar menu button</string>
