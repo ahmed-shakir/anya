@@ -39,6 +39,10 @@
     <string name="network_status_restricted_label">Online (Restricted: %1$s)</string>
     <string name="network_status_loading_label">Loading...</string>
 
+    <!-- User profile labels -->
+    <string name="user_profile_label">My Profile</string>
+    <string name="user_profile_action_content_description">Action to navigate to profile</string>
+
     <!-- TopBar labels -->
     <string name="topbar_action_back_content_description">Navigate back button</string>
     <string name="topbar_action_menu_content_description">Top bar menu button</string>
