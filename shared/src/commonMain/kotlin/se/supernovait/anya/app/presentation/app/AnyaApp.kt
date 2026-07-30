@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -50,6 +52,7 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val networkStatus by networkHandler.connectivity.collectAsStateWithLifecycle(null)
     val deviceManager: DeviceManager = koinInject<DeviceManager>()
     val topBarState = remember { TopBarState() }
+    val snackbarHostState = remember { SnackbarHostState() }
     val backStackEntry by navController.currentBackStackEntryAsState()
     val startScreen = Route.startScreen(authManager.isAuthenticated())
     val currentScreen = Route.parse(backStackEntry?.destination?.route, startScreen)
@@ -62,6 +65,9 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
         LocalTopBarState provides topBarState
     ) {
         Scaffold(
+            snackbarHost = {
+                SnackbarHost(hostState = snackbarHostState)
+            },
             topBar = {
                 if (currentScreen.showTopBar) {
                     AppTopBar(state = topBarState, navigateUp = { navController.navigateUp() })
