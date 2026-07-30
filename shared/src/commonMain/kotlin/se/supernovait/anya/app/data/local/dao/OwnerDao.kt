@@ -16,6 +16,15 @@ interface OwnerDao {
     @Query("SELECT * FROM owners")
     fun getAll(): Flow<List<Owner>>
 
+    @Query("SELECT * FROM owners ORDER BY firstname ASC")
+    fun getAllOrderedByFirstname(): Flow<List<Owner>>
+
+    @Query("SELECT * FROM owners ORDER BY lastname ASC")
+    fun getAllOrderedByLastname(): Flow<List<Owner>>
+
+    @Query("SELECT * FROM owners ORDER BY dob ASC")
+    fun getAllOrderedByBirthdate(): Flow<List<Owner>>
+
     @Query("SELECT * FROM owners WHERE id = :id")
     suspend fun getUserById(id: Long): Owner?
 

@@ -4,6 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import se.supernovait.anya.app.data.local.entity.embedded.Address
+import se.supernovait.anya.app.data.local.entity.embedded.filterBySearchQuery
 
 @Entity(tableName = "owners")
 data class Owner(
@@ -17,3 +18,10 @@ data class Owner(
     @Embedded
     val address: Address? = null,
 )
+
+fun Owner.filterBySearchQuery(searchQuery: String): Boolean {
+    return this.firstname.contains(searchQuery, true) ||
+            this.lastname.contains(searchQuery, true) ||
+            this.dob.contains(searchQuery, true) ||
+            this.address?.filterBySearchQuery(searchQuery) ?: false
+}

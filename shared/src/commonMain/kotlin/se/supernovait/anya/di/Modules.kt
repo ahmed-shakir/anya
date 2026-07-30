@@ -9,7 +9,9 @@ import org.koin.dsl.module
 import se.supernovait.anya.app.data.local.CatDatabase
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
+import se.supernovait.anya.app.data.repository.CatRepositoryImpl
 import se.supernovait.anya.app.domain.repository.AuthRepository
+import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializer
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
@@ -21,6 +23,7 @@ val sharedModule = module {
     singleOf(::AppInitializer)
     singleOf(::AuthenticationManager)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
+    singleOf(::CatRepositoryImpl).bind<CatRepository>()
 
     viewModelOf(::WelcomeViewModel)
 

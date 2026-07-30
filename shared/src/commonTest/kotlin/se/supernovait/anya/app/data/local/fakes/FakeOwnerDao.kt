@@ -10,6 +10,9 @@ class FakeOwnerDao : OwnerDao {
 
     override suspend fun getOwnersCount(): Long = owners.value.size.toLong()
     override fun getAll(): Flow<List<Owner>> = owners
+    override fun getAllOrderedByFirstname(): Flow<List<Owner>> = owners
+    override fun getAllOrderedByLastname(): Flow<List<Owner>> = owners
+    override fun getAllOrderedByBirthdate(): Flow<List<Owner>> = owners
     override suspend fun getUserById(id: Long): Owner? = owners.value.find { it.id == id }
     override suspend fun getUserByUsername(username: String): Owner? = owners.value.find { it.username == username }
     override suspend fun upsert(owner: Owner): Long {
