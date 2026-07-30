@@ -63,6 +63,22 @@
     <string name="dialog_delete_confirmation_title">Confirm Delete</string>
     <string name="dialog_delete_confirmation_message">Are you sure you want to delete %1$s? This action cannot be undone.</string>
 
+    <!-- Profile image labels -->
+    <string name="profile_image_title">Add profile image</string>
+    <string name="profile_image_description">Profile image</string>
+    <string name="profile_image_dialog_content_description">Image picker dialog</string>
+    <string name="profile_image_dialog_camera_action_label">Take a photo</string>
+    <string name="profile_image_dialog_camera_action_content_description">Take a photo button</string>
+    <string name="profile_image_dialog_photo_library_action_label">Upload from Photo Library</string>
+    <string name="profile_image_dialog_photo_library_action_content_description">Upload from Photo Library button</string>
+    <string name="profile_image_dialog_files_action_label">Upload from Files</string>
+    <string name="profile_image_dialog_files_action_content_description">Upload from Files button</string>
+    <string name="profile_image_permission_dialog_title">Permission Required</string>
+    <string name="profile_image_permission_dialog_description">To set your profile image, please grant this permission. You can manage permissions in your device settings.</string>
+    <string name="profile_image_permission_dialog_content_description">Dialog asking for permission</string>
+    <string name="profile_image_permission_settings_action_label">Settings</string>
+    <string name="profile_image_permission_cancel_action_label">Cancel</string>
+
     <!-- Error texts -->
     <string name="error_bad_request">The request contains errors.</string>
     <string name="error_conflict">There is a request conflict.</string>
