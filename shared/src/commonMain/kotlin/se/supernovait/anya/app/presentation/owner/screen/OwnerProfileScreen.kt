@@ -65,15 +65,18 @@ fun OwnerProfileScreen(
     val a11yButtonText = stringResource(Res.string.a11y_button)
     val signOutButtonLabel = stringResource(Res.string.auth_action_sign_out_label)
 
-    if(uiState.showOwnerForm) {
+    if (uiState.showOwnerForm) {
         OwnerForm(owner = owner ?: OwnerState.empty, onEvent = onEvent)
     }
 
-    if(uiState.showAddressForm) {
+    if (uiState.showAddressForm) {
         AddressForm(
-            owner = owner ?: OwnerState.empty,
             address = owner?.address ?: AddressState.empty,
-            onEvent = onEvent
+            onSaveRequest = { address ->
+                val ownerId = owner?.id ?: OwnerState.empty.id
+                onEvent(OwnerScreenEvent.SaveAddress(ownerId = ownerId, address = address))
+            },
+            onDismissRequest = { onEvent(OwnerScreenEvent.HideAddressForm) },
         )
     }
 
@@ -129,7 +132,7 @@ fun OwnerProfileScreen(
                     owner.address?.let { address ->
                         AnyaBoldLabel(text = stringResource(Res.string.address_street_label))
                         AnyaLabel(text = address.street, modifier = sectionContentPadding)
-                        if(address.postalCode.isNotBlank()) {
+                        if (address.postalCode.isNotBlank()) {
                             AnyaBoldLabel(text = stringResource(Res.string.address_postal_code_label))
                             AnyaLabel(text = address.postalCode, modifier = sectionContentPadding)
                         }

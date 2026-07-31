@@ -22,8 +22,6 @@ import anya.shared.generated.resources.address_street_label
 import anya.shared.generated.resources.save_action_label
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.presentation.app.theme.spacing
-import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
-import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.presentation.common.action.AnyaButton
 import se.supernovait.anya.core.presentation.common.input_field.AnyaTextField
 import se.supernovait.anya.core.presentation.common.modal.AnyaBottomSheet
@@ -31,14 +29,14 @@ import se.supernovait.anya.core.presentation.common.preview.ComponentPreviewCont
 import se.supernovait.anya.core.presentation.common.preview.PreviewData
 
 @Composable
-fun AddressForm(owner: OwnerState, address: AddressState, onEvent: (OwnerScreenEvent) -> Unit) {
+fun AddressForm(address: AddressState, onSaveRequest: (AddressState) -> Unit, onDismissRequest: () -> Unit) {
     var state by mutableStateOf(address)
     val a11yButtonText = stringResource(Res.string.a11y_button)
     val saveButtonLabel = stringResource(Res.string.save_action_label)
 
     AnyaBottomSheet(
         contentDescription = stringResource(Res.string.address_form_content_description),
-        onDismissRequest = { onEvent(OwnerScreenEvent.HideAddressForm) }
+        onDismissRequest = onDismissRequest
     ) {
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
             AnyaTextField(
@@ -74,7 +72,7 @@ fun AddressForm(owner: OwnerState, address: AddressState, onEvent: (OwnerScreenE
             AnyaButton(
                 label = saveButtonLabel,
                 contentDescription = "$saveButtonLabel $a11yButtonText",
-                onClick = { onEvent(OwnerScreenEvent.SaveAddress(ownerId = owner.id, address = state)) },
+                onClick = { onSaveRequest(address) },
                 modifier = Modifier.fillMaxWidth().padding(vertical = MaterialTheme.spacing.medium)
             )
         }
@@ -85,6 +83,6 @@ fun AddressForm(owner: OwnerState, address: AddressState, onEvent: (OwnerScreenE
 @Composable
 private fun Preview() {
     ComponentPreviewContainer {
-        AddressForm(owner = PreviewData.owner, address = PreviewData.address, onEvent = { })
+        AddressForm(address = PreviewData.address, onSaveRequest = { }, onDismissRequest = { })
     }
 }

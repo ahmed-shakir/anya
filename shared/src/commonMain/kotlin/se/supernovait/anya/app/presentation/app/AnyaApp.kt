@@ -33,6 +33,9 @@ import se.supernovait.anya.app.presentation.app.auth.LocalAuthState
 import se.supernovait.anya.app.presentation.app.topbar.AppTopBar
 import se.supernovait.anya.app.presentation.app.topbar.LocalTopBarState
 import se.supernovait.anya.app.presentation.app.topbar.TopBarState
+import se.supernovait.anya.app.presentation.cat.CatScreenEvent
+import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.cat.screen.CatProfileScreen
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.navigation.Route
@@ -195,7 +198,23 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
 
                 composable<Route.CatProfile> {
-                    Text("Route.CatProfile")
+                    val viewModel: CatViewModel = koinViewModel<CatViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(
+                        events = viewModel.events,
+                        snackbarHostState = snackbarHostState,
+                        navController = navController
+                    )
+
+                    viewModel.onEvent(CatScreenEvent.LoadCat)
+                    CatProfileScreen(uiState = uiState, onEvent = { event ->
+                        when(event) {
+                            is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                            is CatScreenEvent.NavigateToMedicalRecord -> { /* TODO: implement */}
+                            else -> viewModel.onEvent(event)
+                        }
+                    })
                 }
             }
         }
