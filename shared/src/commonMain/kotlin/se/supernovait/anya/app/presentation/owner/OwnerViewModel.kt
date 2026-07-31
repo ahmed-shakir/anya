@@ -73,7 +73,7 @@ class OwnerViewModel(
             is OwnerScreenEvent.DismissDeleteConfirmation -> toggleDeleteConfirmation(null)
             is OwnerScreenEvent.ShareOwner -> shareOwner(event.owner)
             is OwnerScreenEvent.FilterOwners -> _searchQuery.value = event.searchQuery
-            is OwnerScreenEvent.SortOwners -> _sortOption.value = event.sortType
+            is OwnerScreenEvent.SortOwners -> _sortOption.value = event.sortOption
             is OwnerScreenEvent.ShowSortMenu -> toggleSortMenu(true)
             is OwnerScreenEvent.HideSortMenu -> toggleSortMenu(false)
             is OwnerScreenEvent.ShowOwnerForm -> toggleOwnerForm(event.owner, true)
