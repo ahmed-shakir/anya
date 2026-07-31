@@ -23,6 +23,8 @@
     <string name="a11y_action_edit_content_description">Edit %1$s button</string>
     <string name="a11y_action_share_content_description">Share %1$s button</string>
 
+    <string name="a11y_dialog_delete_confirmation_content_description">Delete %1$s confirmation dialog</string>
+
     <!-- A11Y component -->
     <string name="a11y_date_picker">Date picker, currently: %1$s</string>
     <string name="a11y_input_field">Input field</string>

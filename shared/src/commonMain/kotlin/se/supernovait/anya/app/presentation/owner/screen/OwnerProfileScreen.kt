@@ -14,12 +14,16 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import anya.shared.generated.resources.Res
 import anya.shared.generated.resources.a11y_button
+import anya.shared.generated.resources.a11y_dialog_delete_confirmation_content_description
 import anya.shared.generated.resources.address_city_label
 import anya.shared.generated.resources.address_country_label
 import anya.shared.generated.resources.address_county_label
 import anya.shared.generated.resources.address_postal_code_label
 import anya.shared.generated.resources.address_street_label
 import anya.shared.generated.resources.auth_action_sign_out_label
+import anya.shared.generated.resources.dialog_delete_confirmation_message
+import anya.shared.generated.resources.dialog_delete_confirmation_title
+import anya.shared.generated.resources.ic_delete
 import anya.shared.generated.resources.screen_Owner_form_dob_label
 import anya.shared.generated.resources.screen_Owner_form_full_name_label
 import anya.shared.generated.resources.screen_Owner_form_username_label
@@ -39,6 +43,7 @@ import se.supernovait.anya.core.presentation.common.ProfileImage
 import se.supernovait.anya.core.presentation.common.action.AnyaTextAction
 import se.supernovait.anya.core.presentation.common.container.ScreenContainer
 import se.supernovait.anya.core.presentation.common.container.ScreenSection
+import se.supernovait.anya.core.presentation.common.modal.NotificationDialog
 import se.supernovait.anya.core.presentation.common.preview.PreviewData
 import se.supernovait.anya.core.presentation.common.preview.ScreenPreviewContainer
 import se.supernovait.anya.core.presentation.common.text.AnyaBoldLabel
@@ -69,6 +74,17 @@ fun OwnerProfileScreen(
             owner = owner ?: OwnerState.empty,
             address = owner?.address ?: AddressState.empty,
             onEvent = onEvent
+        )
+    }
+
+    uiState.ownerToDelete?.let { owner ->
+        NotificationDialog(
+            title = stringResource(Res.string.dialog_delete_confirmation_title),
+            text = stringResource(Res.string.dialog_delete_confirmation_message, owner.name),
+            contentDescription = stringResource(Res.string.a11y_dialog_delete_confirmation_content_description, owner.name),
+            icon = Res.drawable.ic_delete,
+            onDismissRequest = { onEvent(OwnerScreenEvent.DismissDeleteConfirmation) },
+            onAction = { onEvent(OwnerScreenEvent.DeleteOwner(owner)) }
         )
     }
 
