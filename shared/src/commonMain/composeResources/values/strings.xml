@@ -170,6 +170,7 @@
     <string name="screen_Owner_form_full_name_label">Name</string>
     <string name="screen_Owner_form_username_label">Username</string>
     <string name="screen_Owner_form_dob_label">Date of Birth</string>
+    <string name="screen_Owner_list_item_content_description">Swipeable owner list item %1$s, click to view owner details</string>
     <string name="screen_Owner_section_personal_details_title">Personal details</string>
     <string name="screen_Owner_section_address_title">Address</string>
 
