@@ -9,12 +9,14 @@ import se.supernovait.anya.app.fakes.FakeAuthRepository
 import se.supernovait.anya.app.fakes.FakeCatRepository
 import se.supernovait.anya.app.fakes.FakeDeviceManager
 import se.supernovait.anya.app.fakes.FakeNetworkHandler
+import se.supernovait.anya.app.fakes.FakeShareHandler
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
 import se.supernovait.anya.core.domain.file.PdfViewer
 import se.supernovait.anya.core.domain.manager.DeviceManager
 import se.supernovait.anya.core.domain.network.NetworkHandler
+import se.supernovait.anya.core.domain.sharing.ShareHandler
 
 actual fun getTestModule() = module {
     single { Json { ignoreUnknownKeys = true; coerceInputValues = true } }
@@ -22,6 +24,7 @@ actual fun getTestModule() = module {
     single<CatRepository> { FakeCatRepository() }
     single<NetworkHandler> { FakeNetworkHandler() }
     single<DeviceManager> { FakeDeviceManager() }
+    single<ShareHandler> { FakeShareHandler() }
     single<PdfViewer> { PdfViewer() }
     single { AuthenticationManager(get()) }
     single { Json { ignoreUnknownKeys = true; coerceInputValues = true } }
