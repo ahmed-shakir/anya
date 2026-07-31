@@ -16,12 +16,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.unit.Dp
 import anya.shared.generated.resources.Res
 import anya.shared.generated.resources.a11y_action_sort_content_description
 import anya.shared.generated.resources.ic_check
 import anya.shared.generated.resources.ic_sort
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
+import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.action.AnyaIconButton
 import se.supernovait.anya.core.presentation.common.preview.ComponentPreviewContainer
@@ -31,7 +33,8 @@ fun <T> SortDropdownMenu(
     allOptions: List<T>,
     selectedSortOption: T,
     onSortOptionSelected: (T) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    iconSize: Dp = MaterialTheme.spacing.iconMedium
 ) where T : Enum<T>, T : SortOption {
     var expanded by remember { mutableStateOf(false) }
 
@@ -44,6 +47,7 @@ fun <T> SortDropdownMenu(
         AnyaIconButton(
             icon = Res.drawable.ic_sort,
             contentDescription = stringResource(Res.string.a11y_action_sort_content_description),
+            iconSize = iconSize,
             onClick = { expanded = true }
         )
 

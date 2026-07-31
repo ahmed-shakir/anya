@@ -6,7 +6,7 @@ data class OwnerScreenState(
     val owners: List<OwnerState> = emptyList(),
     val selectedOwner: OwnerState? = null,
     val ownerToDelete: OwnerState? = null,
-    val sortType: OwnerSortOption = OwnerSortOption.DEFAULT,
+    val selectedSortOption: OwnerSortOption = OwnerSortOption.DEFAULT,
     val isLoading: Boolean = false,
     val showOwnerForm: Boolean = false,
     val showAddressForm: Boolean = false,

@@ -33,26 +33,25 @@ class OwnerViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val catRepository: CatRepository
 ) : ViewModel() {
-    private val _sortType = MutableStateFlow(OwnerSortOption.DEFAULT)
+    private val _sortOption = MutableStateFlow(OwnerSortOption.DEFAULT)
     private val _searchQuery = MutableStateFlow("")
-    private val _owners = _sortType
-        .flatMapLatest { sortType ->
-            when(sortType) {
+    private val _owners = _sortOption
+        .flatMapLatest { sortOption ->
+            when(sortOption) {
                 OwnerSortOption.DEFAULT -> catRepository.getAllOwners()
                 OwnerSortOption.FIRSTNAME -> catRepository.getAllOwnersOrderedByFirstname()
                 OwnerSortOption.LASTNAME -> catRepository.getAllOwnersOrderedByLastname()
                 OwnerSortOption.DATE_OF_BIRTH -> catRepository.getAllOwnersOrderedByBirthdate()
-                else -> catRepository.getAllOwners()
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val _uiState = MutableStateFlow(OwnerScreenState())
-    val uiState = combine(_uiState, _sortType, _searchQuery, _owners) { state, sortType, searchQuery, owners ->
+    val uiState = combine(_uiState, _sortOption, _searchQuery, _owners) { state, sortOption, searchQuery, owners ->
         state.copy(
             owners = owners
                 .filter { it.filterBySearchQuery(searchQuery) }
                 .map { it.mapToState() },
-            sortType = sortType
+            selectedSortOption = sortOption
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), OwnerScreenState())
 
@@ -74,7 +73,7 @@ class OwnerViewModel(
             is OwnerScreenEvent.DismissDeleteConfirmation -> toggleDeleteConfirmation(null)
             is OwnerScreenEvent.ShareOwner -> shareOwner(event.owner)
             is OwnerScreenEvent.FilterOwners -> _searchQuery.value = event.searchQuery
-            is OwnerScreenEvent.SortOwners -> _sortType.value = event.sortType
+            is OwnerScreenEvent.SortOwners -> _sortOption.value = event.sortType
             is OwnerScreenEvent.ShowSortMenu -> toggleSortMenu(true)
             is OwnerScreenEvent.HideSortMenu -> toggleSortMenu(false)
             is OwnerScreenEvent.ShowOwnerForm -> toggleOwnerForm(event.owner, true)

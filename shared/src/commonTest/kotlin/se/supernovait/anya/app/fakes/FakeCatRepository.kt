@@ -15,6 +15,11 @@ class FakeCatRepository : CatRepository {
     override fun getAllOwnersOrderedByLastname(): Flow<List<Owner>> = owners.map { it.sortedBy { o -> o.lastname } }
     override fun getAllOwnersOrderedByBirthdate(): Flow<List<Owner>> = owners.map { it.sortedBy { o -> o.dob } }
 
+    override suspend fun getOwnerById(id: Long): Owner? {
+        if (shouldReturnError) throw Exception("Repository error")
+        return owners.value.find { it.id == id }
+    }
+
     override suspend fun upsertOwner(owner: Owner) {
         if (shouldReturnError) throw Exception("Repository error")
         val current = owners.value.toMutableList()

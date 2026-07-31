@@ -39,6 +39,7 @@ import se.supernovait.anya.app.presentation.navigation.Route
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.owner.screen.OwnerProfileScreen
+import se.supernovait.anya.app.presentation.owner.screen.OwnerScreen
 import se.supernovait.anya.app.presentation.start.StartScreen
 import se.supernovait.anya.app.presentation.start.StartScreenEvent
 import se.supernovait.anya.app.presentation.welcome.WelcomeScreen
@@ -156,7 +157,17 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
 
                 composable<Route.Owner> {
-                    Text("Route.Owner")
+                    val viewModel: OwnerViewModel = koinViewModel<OwnerViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+
+                    OwnerScreen(uiState = uiState, onEvent = { event ->
+                        when(event) {
+                            is OwnerScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                            else -> viewModel.onEvent(event)
+                        }
+                    })
                 }
 
                 composable<Route.OwnerProfile> {
