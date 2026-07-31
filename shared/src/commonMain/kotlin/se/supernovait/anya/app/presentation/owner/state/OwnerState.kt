@@ -3,6 +3,7 @@ package se.supernovait.anya.app.presentation.owner.state
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.LocalDate
 import se.supernovait.anya.app.presentation.address.AddressState
+import se.supernovait.anya.app.presentation.cat.state.CatState
 
 @Stable
 data class OwnerState(
@@ -12,7 +13,8 @@ data class OwnerState(
     val username: String? = null,
     val dob: LocalDate?,
     val imageUri: String? = null,
-    val address: AddressState? = null
+    val address: AddressState? = null,
+    val cats: List<CatState> = emptyList()
 ) {
     val name: String
         get() = "$firstname $lastname"

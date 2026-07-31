@@ -1,11 +1,12 @@
 package se.supernovait.anya.app.domain.mapper
 
+import se.supernovait.anya.app.data.local.entity.Cat
 import se.supernovait.anya.app.data.local.entity.Owner
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.util.isoString
 import se.supernovait.anya.core.domain.util.toLocalDate
 
-fun Owner.mapToState(): OwnerState {
+fun Owner.mapToState(cats: List<Cat> = emptyList()): OwnerState {
     return OwnerState(
         id = id,
         firstname = firstname,
@@ -13,7 +14,8 @@ fun Owner.mapToState(): OwnerState {
         username = username,
         dob = dob.toLocalDate(),
         imageUri = imageUri,
-        address = address?.mapToState()
+        address = address?.mapToState(),
+        cats = cats.map { it.mapToState(this) }
     )
 }
 

@@ -58,6 +58,7 @@
     <string name="sort_default_label">Default order</string>
     <string name="sort_firstname_label">Order by firstname</string>
     <string name="sort_lastname_label">Order by lastname</string>
+    <string name="sort_name_label">Order by name</string>
     <string name="sort_dob_label">Order by date of birth</string>
 
     <!-- TopBar labels -->
