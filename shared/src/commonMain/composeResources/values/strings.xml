@@ -12,6 +12,8 @@
     <!-- A11Y state -->
     <string name="a11y_state_enabled">enabled</string>
     <string name="a11y_state_disabled">disabled</string>
+    <string name="a11y_state_expanded">expanded</string>
+    <string name="a11y_state_collapsed">collapsed</string>
 
     <!-- A11Y action -->
     <string name="a11y_action_date_picker_content_description">Date picker button</string>
@@ -33,6 +35,8 @@
     <string name="a11y_select_field">Select field, currently %1$s. Tap to expand menu.</string>
     <string name="a11y_select_field_menu">Menu options</string>
     <string name="a11y_password_field">Password field</string>
+    <string name="a11y_checkbox">Checkbox</string>
+    <string name="a11y_switch">Switch</string>
     <string name="a11y_button">Button</string>
     <string name="a11y_date_picker_dialog">Date picker dialog</string>
     <string name="a11y_swipeable_list_item_with_actions">Swipeable list item with actions</string>
