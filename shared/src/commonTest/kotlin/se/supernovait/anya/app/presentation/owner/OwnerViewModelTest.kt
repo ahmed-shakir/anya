@@ -14,7 +14,7 @@ import se.supernovait.anya.app.data.local.entity.Owner
 import se.supernovait.anya.app.fakes.FakeCatRepository
 import se.supernovait.anya.app.fakes.FakeShareHandler
 import se.supernovait.anya.app.presentation.app.AppEvent
-import se.supernovait.anya.app.presentation.owner.state.AddressState
+import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.app.util.AnyaBaseTest
 import se.supernovait.anya.core.domain.model.error.NetworkError

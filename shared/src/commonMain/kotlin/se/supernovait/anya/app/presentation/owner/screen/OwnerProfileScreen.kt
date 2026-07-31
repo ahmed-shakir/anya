@@ -14,16 +14,25 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import anya.shared.generated.resources.Res
 import anya.shared.generated.resources.a11y_button
+import anya.shared.generated.resources.address_city_label
+import anya.shared.generated.resources.address_country_label
+import anya.shared.generated.resources.address_county_label
+import anya.shared.generated.resources.address_postal_code_label
+import anya.shared.generated.resources.address_street_label
 import anya.shared.generated.resources.auth_action_sign_out_label
 import anya.shared.generated.resources.screen_Owner_form_dob_label
 import anya.shared.generated.resources.screen_Owner_form_full_name_label
 import anya.shared.generated.resources.screen_Owner_form_username_label
 import anya.shared.generated.resources.screen_Owner_image_description
+import anya.shared.generated.resources.screen_Owner_section_address_title
 import anya.shared.generated.resources.screen_Owner_section_personal_details_title
 import org.jetbrains.compose.resources.stringResource
+import se.supernovait.anya.app.presentation.address.AddressForm
+import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
 import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
+import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.util.isoString
 import se.supernovait.anya.core.presentation.common.ProfileImage
 import se.supernovait.anya.core.presentation.common.action.AnyaTextAction
@@ -49,6 +58,14 @@ fun OwnerProfileScreen(
     val sectionContentPadding = Modifier.padding(bottom = MaterialTheme.spacing.extraSmall)
     val a11yButtonText = stringResource(Res.string.a11y_button)
     val signOutButtonLabel = stringResource(Res.string.auth_action_sign_out_label)
+
+    if(uiState.showAddressForm) {
+        AddressForm(
+            owner = owner ?: OwnerState.empty,
+            address = owner?.address ?: AddressState.empty,
+            onEvent = onEvent
+        )
+    }
 
     ScreenContainer(modifier = modifier) {
         owner?.let { owner ->
@@ -82,6 +99,26 @@ fun OwnerProfileScreen(
                     }
                     AnyaBoldLabel(text = stringResource(Res.string.screen_Owner_form_dob_label))
                     AnyaLabel(text = owner.dob.isoString(), modifier = sectionContentPadding)
+                }
+
+                ScreenSection(
+                    title = stringResource(Res.string.screen_Owner_section_address_title),
+                    onEdit = { onEvent(OwnerScreenEvent.ShowAddressForm(owner)) }
+                ) {
+                    owner.address?.let { address ->
+                        AnyaBoldLabel(text = stringResource(Res.string.address_street_label))
+                        AnyaLabel(text = address.street, modifier = sectionContentPadding)
+                        if(address.postalCode.isNotBlank()) {
+                            AnyaBoldLabel(text = stringResource(Res.string.address_postal_code_label))
+                            AnyaLabel(text = address.postalCode, modifier = sectionContentPadding)
+                        }
+                        AnyaBoldLabel(text = stringResource(Res.string.address_city_label))
+                        AnyaLabel(text = address.city, modifier = sectionContentPadding)
+                        AnyaBoldLabel(text = stringResource(Res.string.address_county_label))
+                        AnyaLabel(text = address.county, modifier = sectionContentPadding)
+                        AnyaBoldLabel(text = stringResource(Res.string.address_country_label))
+                        AnyaLabel(text = address.country)
+                    }
                 }
 
                 AnyaTextAction(

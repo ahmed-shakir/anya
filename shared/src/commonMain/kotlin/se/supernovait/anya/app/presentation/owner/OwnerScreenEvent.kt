@@ -1,7 +1,7 @@
 package se.supernovait.anya.app.presentation.owner
 
 import se.supernovait.anya.app.domain.model.SortType
-import se.supernovait.anya.app.presentation.owner.state.AddressState
+import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.model.AnyaEvent
 

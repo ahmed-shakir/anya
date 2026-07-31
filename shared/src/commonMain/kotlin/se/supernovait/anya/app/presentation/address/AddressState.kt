@@ -1,4 +1,4 @@
-package se.supernovait.anya.app.presentation.owner.state
+package se.supernovait.anya.app.presentation.address
 
 data class AddressState(
     val id: Long = 0,

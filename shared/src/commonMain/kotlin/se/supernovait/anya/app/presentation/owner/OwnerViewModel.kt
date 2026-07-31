@@ -21,10 +21,10 @@ import se.supernovait.anya.app.domain.model.SortType
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.app.AppEvent
 import se.supernovait.anya.app.presentation.navigation.Route
-import se.supernovait.anya.app.presentation.owner.state.AddressState
+import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
-import se.supernovait.anya.app.presentation.owner.state.isValid
+import se.supernovait.anya.app.presentation.address.isValid
 import se.supernovait.anya.core.domain.model.error.NetworkError
 
 @OptIn(ExperimentalCoroutinesApi::class)

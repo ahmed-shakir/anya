@@ -1,7 +1,7 @@
 package se.supernovait.anya.app.domain.mapper
 
 import se.supernovait.anya.app.data.local.entity.embedded.Address
-import se.supernovait.anya.app.presentation.owner.state.AddressState
+import se.supernovait.anya.app.presentation.address.AddressState
 
 fun Address.mapToState(): AddressState {
     return AddressState(

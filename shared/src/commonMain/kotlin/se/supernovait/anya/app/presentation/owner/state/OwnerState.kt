@@ -2,6 +2,7 @@ package se.supernovait.anya.app.presentation.owner.state
 
 import androidx.compose.runtime.Stable
 import kotlinx.datetime.LocalDate
+import se.supernovait.anya.app.presentation.address.AddressState
 
 @Stable
 data class OwnerState(

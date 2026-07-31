@@ -55,6 +55,9 @@
     <string name="topbar_action_back_content_description">Navigate back button</string>
     <string name="topbar_action_menu_content_description">Top bar menu button</string>
 
+    <!-- Default action labels -->
+    <string name="save_action_label">Save</string>
+
     <!-- Default dialog labels -->
     <string name="default_dialog_confirm_action_label">Confirm</string>
     <string name="default_dialog_dismiss_action_label">Dismiss</string>
@@ -116,6 +119,14 @@
     <string name="screen_Error_description">The service cannot be reached at the moment.</string>
     <string name="screen_Error_action_retry_label">Try again</string>
 
+    <!-- Address labels -->
+    <string name="address_form_content_description">Address form</string>
+    <string name="address_street_label">Street</string>
+    <string name="address_postal_code_label">Postal Code</string>
+    <string name="address_city_label">City</string>
+    <string name="address_county_label">County</string>
+    <string name="address_country_label">Country</string>
+
     <!-- Welcome Screen -->
     <string name="screen_Welcome_action_sign_up_label">Sign up</string>
     <string name="screen_Welcome_action_sign_in_label">Sign in</string>
@@ -150,5 +161,6 @@
     <string name="screen_Owner_form_username_label">Username</string>
     <string name="screen_Owner_form_dob_label">Date of Birth</string>
     <string name="screen_Owner_section_personal_details_title">Personal details</string>
+    <string name="screen_Owner_section_address_title">Address</string>
 
 </resources>
