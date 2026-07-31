@@ -14,9 +14,12 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.serialization.json.Json
 import se.supernovait.anya.app.data.local.entity.filterBySearchQuery
+import se.supernovait.anya.app.domain.mapper.mapToDto
 import se.supernovait.anya.app.domain.mapper.mapToEntity
 import se.supernovait.anya.app.domain.mapper.mapToState
+import se.supernovait.anya.app.domain.model.ShareType
 import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.address.AddressState
@@ -27,11 +30,14 @@ import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.app.presentation.owner.state.isValid
 import se.supernovait.anya.core.domain.model.error.NetworkError
+import se.supernovait.anya.core.domain.sharing.ShareHandler
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class OwnerViewModel(
     private val savedStateHandle: SavedStateHandle,
-    private val catRepository: CatRepository
+    private val catRepository: CatRepository,
+    private val shareHandler: ShareHandler,
+    private val json: Json
 ) : ViewModel() {
     private val _sortOption = MutableStateFlow(OwnerSortOption.DEFAULT)
     private val _searchQuery = MutableStateFlow("")
@@ -127,7 +133,10 @@ class OwnerViewModel(
     }
 
     private fun shareOwner(owner: OwnerState) {
-        // TODO: implement
+        viewModelScope.launch {
+            val data = json.encodeToString(owner.mapToEntity().mapToDto())
+            shareHandler.shareData(ShareType.OWNER.id, data)
+        }
     }
 
     private fun deleteOwner(owner: OwnerState) {
