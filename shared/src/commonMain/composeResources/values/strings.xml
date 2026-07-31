@@ -54,6 +54,10 @@
     <string name="file_action_view_label">View file</string>
     <string name="file_action_upload_label">Upload file</string>
 
+    <!-- Datetime labels -->
+    <string name="datetime_years_old">%1$s years old</string>
+    <string name="datetime_months_old">%1$s months old</string>
+
     <!-- Sort labels -->
     <string name="sort_default_label">Default order</string>
     <string name="sort_firstname_label">Order by firstname</string>
@@ -177,4 +181,7 @@
     <string name="screen_Owner_section_personal_details_title">Personal details</string>
     <string name="screen_Owner_section_address_title">Address</string>
 
+    <!-- Cat Screen -->
+    <string name="screen_Cat_image_description">Cat image</string>
+    <string name="screen_Cat_list_item_content_description">Swipeable cat list item %1$s, click to view cat details</string>
 </resources>
