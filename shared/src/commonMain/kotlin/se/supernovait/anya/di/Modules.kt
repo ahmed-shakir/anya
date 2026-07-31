@@ -7,6 +7,7 @@ import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import se.supernovait.anya.app.data.local.CatDatabase
+import se.supernovait.anya.app.data.local.dao.CatDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
 import se.supernovait.anya.app.data.repository.CatRepositoryImpl
@@ -38,6 +39,10 @@ val sharedModule = module {
 
     single<CatDatabase> {
         DatabaseFactory.create(get())
+    }
+
+    single<CatDao> {
+        get<CatDatabase>().catDao()
     }
 
     single<OwnerDao> {

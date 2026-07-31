@@ -9,8 +9,10 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import kotlinx.datetime.LocalDate
+import kotlinx.serialization.json.Json
 import se.supernovait.anya.app.data.local.entity.Owner
 import se.supernovait.anya.app.fakes.FakeCatRepository
+import se.supernovait.anya.app.fakes.FakeShareHandler
 import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.app.AppEvent
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
@@ -26,11 +28,14 @@ import kotlin.test.assertTrue
 class OwnerViewModelTest : AnyaBaseTest() {
     private val testDispatcher = StandardTestDispatcher()
     private lateinit var catRepository: FakeCatRepository
+    private lateinit var shareHandler: FakeShareHandler
+    private val json = Json { ignoreUnknownKeys = true }
 
     @BeforeTest
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         catRepository = FakeCatRepository()
+        shareHandler = FakeShareHandler()
     }
 
     @AfterTest
@@ -108,7 +113,9 @@ class OwnerViewModelTest : AnyaBaseTest() {
     private fun createViewModel(): OwnerViewModel {
         return OwnerViewModel(
             savedStateHandle = SavedStateHandle(),
-            catRepository = catRepository
+            catRepository = catRepository,
+            shareHandler = shareHandler,
+            json = json
         )
     }
 }

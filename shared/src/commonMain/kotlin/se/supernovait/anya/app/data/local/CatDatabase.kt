@@ -6,16 +6,20 @@ import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import androidx.room.execSQL
 import androidx.room.useWriterConnection
+import se.supernovait.anya.app.data.local.dao.CatDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
+import se.supernovait.anya.app.data.local.entity.Cat
 import se.supernovait.anya.app.data.local.entity.Owner
 
 @Database(
     entities = [
-        Owner::class
+        Cat::class,
+        Owner::class,
     ], version = 1
 )
 @ConstructedBy(CatDatabaseConstructor::class)
 abstract class CatDatabase : RoomDatabase() {
+    abstract fun catDao(): CatDao
     abstract fun ownerDao(): OwnerDao
 
     companion object {
@@ -28,9 +32,11 @@ abstract class CatDatabase : RoomDatabase() {
  */
 suspend fun CatDatabase.clearAllTablesKmp() {
     useWriterConnection { connection ->
+        connection.execSQL("DELETE FROM cats")
         connection.execSQL("DELETE FROM owners")
 
         // Reset autoincrement sequences
+        connection.execSQL("DELETE FROM sqlite_sequence WHERE name='cats'")
         connection.execSQL("DELETE FROM sqlite_sequence WHERE name='owners'")
     }
 }

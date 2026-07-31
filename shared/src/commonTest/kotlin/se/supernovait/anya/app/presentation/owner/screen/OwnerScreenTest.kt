@@ -111,7 +111,7 @@ class OwnerScreenTest : AnyaBaseTest() {
         onNodeWithContentDescription("Sort button", ignoreCase = true).performClick()
         onNodeWithText("Order by firstname", ignoreCase = true, substring = true).performClick()
         assertIs<OwnerScreenEvent.SortOwners>(capturedEvent)
-        assertEquals(OwnerSortOption.FIRSTNAME, (capturedEvent as OwnerScreenEvent.SortOwners).sortType)
+        assertEquals(OwnerSortOption.FIRSTNAME, (capturedEvent as OwnerScreenEvent.SortOwners).sortOption)
         capturedEvent = null
 
         // 6. OwnerForm visibility
