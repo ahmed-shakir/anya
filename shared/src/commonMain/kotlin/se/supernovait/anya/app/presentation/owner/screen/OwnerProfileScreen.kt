@@ -31,6 +31,7 @@ import se.supernovait.anya.app.presentation.address.AddressForm
 import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
+import se.supernovait.anya.app.presentation.owner.component.OwnerForm
 import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.util.isoString
@@ -58,6 +59,10 @@ fun OwnerProfileScreen(
     val sectionContentPadding = Modifier.padding(bottom = MaterialTheme.spacing.extraSmall)
     val a11yButtonText = stringResource(Res.string.a11y_button)
     val signOutButtonLabel = stringResource(Res.string.auth_action_sign_out_label)
+
+    if(uiState.showOwnerForm) {
+        OwnerForm(owner = owner ?: OwnerState.empty, onEvent = onEvent)
+    }
 
     if(uiState.showAddressForm) {
         AddressForm(

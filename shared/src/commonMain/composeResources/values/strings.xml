@@ -155,6 +155,7 @@
 
     <!-- Owner Screen -->
     <string name="screen_Owner_image_description">Owner image</string>
+    <string name="screen_Owner_form_content_description">Owner form</string>
     <string name="screen_Owner_form_firstname_label">Firstname</string>
     <string name="screen_Owner_form_lastname_label">Lastname</string>
     <string name="screen_Owner_form_full_name_label">Name</string>
