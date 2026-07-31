@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import se.supernovait.anya.app.data.local.entity.filterBySearchQuery
 import se.supernovait.anya.app.domain.mapper.mapToEntity
 import se.supernovait.anya.app.domain.mapper.mapToState
-import se.supernovait.anya.app.domain.model.SortType
+import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.address.isValid
@@ -33,15 +33,15 @@ class OwnerViewModel(
     private val savedStateHandle: SavedStateHandle,
     private val catRepository: CatRepository
 ) : ViewModel() {
-    private val _sortType = MutableStateFlow(SortType.DEFAULT)
+    private val _sortType = MutableStateFlow(OwnerSortOption.DEFAULT)
     private val _searchQuery = MutableStateFlow("")
     private val _owners = _sortType
         .flatMapLatest { sortType ->
             when(sortType) {
-                SortType.DEFAULT -> catRepository.getAllOwners()
-                SortType.FIRSTNAME -> catRepository.getAllOwnersOrderedByFirstname()
-                SortType.LASTNAME -> catRepository.getAllOwnersOrderedByLastname()
-                SortType.DATE -> catRepository.getAllOwnersOrderedByBirthdate()
+                OwnerSortOption.DEFAULT -> catRepository.getAllOwners()
+                OwnerSortOption.FIRSTNAME -> catRepository.getAllOwnersOrderedByFirstname()
+                OwnerSortOption.LASTNAME -> catRepository.getAllOwnersOrderedByLastname()
+                OwnerSortOption.DATE_OF_BIRTH -> catRepository.getAllOwnersOrderedByBirthdate()
                 else -> catRepository.getAllOwners()
             }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

@@ -1,6 +1,6 @@
 package se.supernovait.anya.app.presentation.owner
 
-import se.supernovait.anya.app.domain.model.SortType
+import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
 import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.model.AnyaEvent
@@ -16,7 +16,7 @@ sealed interface OwnerScreenEvent : AnyaEvent {
     data object DismissDeleteConfirmation: OwnerScreenEvent
     data class ShareOwner(val owner: OwnerState): OwnerScreenEvent
     data class FilterOwners(val searchQuery: String): OwnerScreenEvent
-    data class SortOwners(val sortType: SortType): OwnerScreenEvent
+    data class SortOwners(val sortType: OwnerSortOption): OwnerScreenEvent
     data object ShowSortMenu: OwnerScreenEvent
     data object HideSortMenu: OwnerScreenEvent
     data class ShowOwnerForm(val owner: OwnerState? = null): OwnerScreenEvent
