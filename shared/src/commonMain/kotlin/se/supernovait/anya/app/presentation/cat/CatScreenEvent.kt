@@ -17,7 +17,7 @@ sealed interface CatScreenEvent : AnyaEvent {
     data object DismissDeleteConfirmation: CatScreenEvent
     data class ShareCat(val cat: CatState): CatScreenEvent
     data class FilterCats(val searchQuery: String): CatScreenEvent
-    data class SortCats(val sortType: CatSortOption): CatScreenEvent
+    data class SortCats(val sortOption: CatSortOption): CatScreenEvent
     data object ShowSortMenu: CatScreenEvent
     data object HideSortMenu: CatScreenEvent
     data object ShowPedigree: CatScreenEvent

@@ -36,6 +36,7 @@ import se.supernovait.anya.app.presentation.app.topbar.TopBarState
 import se.supernovait.anya.app.presentation.cat.CatScreenEvent
 import se.supernovait.anya.app.presentation.cat.CatViewModel
 import se.supernovait.anya.app.presentation.cat.screen.CatProfileScreen
+import se.supernovait.anya.app.presentation.cat.screen.CatScreen
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.navigation.Route
@@ -194,7 +195,18 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
 
                 composable<Route.Cat> {
-                    Text("Route.Cat")
+                    val viewModel: CatViewModel = koinViewModel<CatViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+
+                    CatScreen(uiState = uiState, onEvent = { event ->
+                        when(event) {
+                            is CatScreenEvent.NavigateToCat -> navController.navigate(Route.CatProfile(event.id))
+                            is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                            else -> viewModel.onEvent(event)
+                        }
+                    })
                 }
 
                 composable<Route.CatProfile> {

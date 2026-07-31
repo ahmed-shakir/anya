@@ -186,6 +186,7 @@
     <string name="screen_Owner_section_address_title">Address</string>
 
     <!-- Cat Screen -->
+    <string name="screen_Cat_search_label">Search...</string>
     <string name="screen_Cat_image_description">Cat image</string>
     <string name="screen_Cat_form_content_description">Cat form</string>
     <string name="screen_Cat_form_name_label">Name</string>
@@ -197,6 +198,7 @@
     <string name="screen_Cat_form_sterilized_label">Sterilized</string>
     <string name="screen_Cat_form_owner_label">I'm the owner</string>
     <string name="screen_Cat_form_address_label">Lives with me</string>
+    <string name="screen_Cat_fab_action_add_content_description">Add new cat</string>
     <string name="screen_Cat_list_item_content_description">Swipeable cat list item %1$s, click to view cat details</string>
     <string name="screen_Cat_section_personal_details_title">Personal details</string>
     <string name="screen_Cat_section_address_title">Address</string>

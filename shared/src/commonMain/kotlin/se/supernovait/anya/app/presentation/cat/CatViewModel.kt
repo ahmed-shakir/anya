@@ -41,27 +41,26 @@ class CatViewModel(
     private val shareHandler: ShareHandler,
     private val json: Json
 ) : ViewModel() {
-    private val _sortType = MutableStateFlow(CatSortOption.DEFAULT)
+    private val _sortOption = MutableStateFlow(CatSortOption.DEFAULT)
     private val _searchQuery = MutableStateFlow("")
     private val _ownerId = savedStateHandle.toRoute<Route.Cat>().ownerId
-    private val _cats = _sortType
-        .flatMapLatest { sortType ->
-            when(sortType) {
+    private val _cats = _sortOption
+        .flatMapLatest { sortOption ->
+            when(sortOption) {
                 CatSortOption.DEFAULT -> catRepository.getAllCats(_ownerId)
                 CatSortOption.DATE_OF_BIRTH -> catRepository.getAllCatsOrderedByBirthdate()
                 CatSortOption.NAME -> catRepository.getAllCatsOrderedByName()
-                else -> catRepository.getAllCats(_ownerId)
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     private val _uiState = MutableStateFlow(CatScreenState())
-    val uiState = combine(_uiState, _sortType, _searchQuery, _cats) { state, sortType, searchQuery, cats ->
+    val uiState = combine(_uiState, _sortOption, _searchQuery, _cats) { state, sortOption, searchQuery, cats ->
         state.copy(
             cats = cats
                 .filter { it.filterBySearchQuery(searchQuery) }
                 .map { it.mapToState() },
-            sortType = sortType
+            selectedSortOption = sortOption
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatScreenState())
 
@@ -84,7 +83,7 @@ class CatViewModel(
             is CatScreenEvent.DismissDeleteConfirmation -> toggleDeleteConfirmation(null)
             is CatScreenEvent.ShareCat -> shareCat(event.cat)
             is CatScreenEvent.FilterCats -> _searchQuery.value = event.searchQuery
-            is CatScreenEvent.SortCats -> _sortType.value = event.sortType
+            is CatScreenEvent.SortCats -> _sortOption.value = event.sortOption
             is CatScreenEvent.ShowSortMenu -> toggleSortMenu(true)
             is CatScreenEvent.HideSortMenu -> toggleSortMenu(false)
             is CatScreenEvent.ShowPedigree -> { toggleFileMenu(showMenu = true) }

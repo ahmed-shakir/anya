@@ -6,7 +6,7 @@ data class CatScreenState(
     val cats: List<CatState> = emptyList(),
     val selectedCat: CatState? = null,
     val catToDelete: CatState? = null,
-    val sortType: CatSortOption = CatSortOption.DEFAULT,
+    val selectedSortOption: CatSortOption = CatSortOption.DEFAULT,
     val showCatForm: Boolean = false,
     val showAddressForm: Boolean = false,
     val showSortMenu: Boolean = false,
