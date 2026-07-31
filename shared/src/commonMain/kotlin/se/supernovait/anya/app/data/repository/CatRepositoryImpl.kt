@@ -8,6 +8,8 @@ import se.supernovait.anya.app.data.local.dao.CatDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.local.entity.Cat
 import se.supernovait.anya.app.data.local.entity.Owner
+import se.supernovait.anya.app.data.local.entity.relation.CatAndOwner
+import se.supernovait.anya.app.data.local.entity.relation.OwnerWithCats
 import se.supernovait.anya.app.domain.repository.CatRepository
 import kotlin.coroutines.CoroutineContext
 
@@ -27,6 +29,12 @@ class CatRepositoryImpl(
 
     override fun getAllCatsOrderedByBirthdate(): Flow<List<Cat>> {
         return catDao.getAllOrderedByBirthdate()
+    }
+
+    override suspend fun getCatById(id: Long): CatAndOwner? {
+        return withContext(ioContext) {
+            catDao.getById(id)
+        }
     }
 
     override suspend fun upsertCat(cat: Cat) {
@@ -59,8 +67,10 @@ class CatRepositoryImpl(
         return ownerDao.getAllOrderedByBirthdate()
     }
 
-    override suspend fun getOwnerById(id: Long): Owner? {
-        return ownerDao.getUserById(id)
+    override suspend fun getOwnerById(id: Long): OwnerWithCats? {
+        return withContext(ioContext) {
+            ownerDao.getById(id)
+        }
     }
 
     override suspend fun upsertOwner(owner: Owner) {

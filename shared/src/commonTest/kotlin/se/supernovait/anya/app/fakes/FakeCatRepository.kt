@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import se.supernovait.anya.app.data.local.entity.Cat
 import se.supernovait.anya.app.data.local.entity.Owner
+import se.supernovait.anya.app.data.local.entity.relation.CatAndOwner
+import se.supernovait.anya.app.data.local.entity.relation.OwnerWithCats
 import se.supernovait.anya.app.domain.repository.CatRepository
 
 class FakeCatRepository : CatRepository {
@@ -17,6 +19,13 @@ class FakeCatRepository : CatRepository {
     }
     override fun getAllCatsOrderedByName(): Flow<List<Cat>> = cats.map { it.sortedBy { c -> c.name } }
     override fun getAllCatsOrderedByBirthdate(): Flow<List<Cat>> = cats.map { it.sortedBy { c -> c.dob } }
+
+    override suspend fun getCatById(id: Long): CatAndOwner? {
+        if (shouldReturnError) throw Exception("Repository error")
+        val cat = cats.value.find { it.id == id } ?: return null
+        val owner = owners.value.find { it.id == cat.ownerId }
+        return CatAndOwner(cat, owner)
+    }
 
     override suspend fun upsertCat(cat: Cat) {
         if (shouldReturnError) throw Exception("Repository error")
@@ -36,9 +45,11 @@ class FakeCatRepository : CatRepository {
     override fun getAllOwnersOrderedByLastname(): Flow<List<Owner>> = owners.map { it.sortedBy { o -> o.lastname } }
     override fun getAllOwnersOrderedByBirthdate(): Flow<List<Owner>> = owners.map { it.sortedBy { o -> o.dob } }
 
-    override suspend fun getOwnerById(id: Long): Owner? {
+    override suspend fun getOwnerById(id: Long): OwnerWithCats? {
         if (shouldReturnError) throw Exception("Repository error")
-        return owners.value.find { it.id == id }
+        val owner = owners.value.find { it.id == id } ?: return null
+        val ownerCats = cats.value.filter { it.ownerId == id }
+        return OwnerWithCats(owner, ownerCats)
     }
 
     override suspend fun upsertOwner(owner: Owner) {

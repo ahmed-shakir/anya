@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import se.supernovait.anya.app.data.local.dao.CatDao
 import se.supernovait.anya.app.data.local.entity.Cat
+import se.supernovait.anya.app.data.local.entity.relation.CatAndOwner
 
 class FakeCatDao : CatDao {
     private val cats = MutableStateFlow<List<Cat>>(emptyList())
@@ -18,6 +19,11 @@ class FakeCatDao : CatDao {
     override fun getAllOrderedByName(): Flow<List<Cat>> = cats.map { it.sortedBy { c -> c.name } }
 
     override fun getAllOrderedByBirthdate(): Flow<List<Cat>> = cats.map { it.sortedBy { c -> c.dob } }
+
+    override suspend fun getById(id: Long): CatAndOwner? {
+        val cat = cats.value.find { it.id == id } ?: return null
+        return CatAndOwner(cat, null) // Owner mock not easily available here without more context
+    }
 
     override suspend fun upsert(cat: Cat) {
         val current = cats.value.toMutableList()

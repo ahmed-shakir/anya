@@ -92,8 +92,10 @@ class OwnerViewModel(
 
     private fun getOwnerById(id: Long) {
         viewModelScope.launch {
-            val owner = catRepository.getOwnerById(id)
-            _uiState.update { currentState -> currentState.copy(selectedOwner = owner?.mapToState()) }
+            val ownerWithCats = catRepository.getOwnerById(id)
+            val owner = ownerWithCats?.owner
+            val cats = ownerWithCats?.cats ?: emptyList()
+            _uiState.update { currentState -> currentState.copy(selectedOwner = owner?.mapToState(cats)) }
         }
     }
 
@@ -116,7 +118,7 @@ class OwnerViewModel(
 
         if(address.isValid()) {
             viewModelScope.launch {
-                val owner = catRepository.getOwnerById(ownerId)
+                val owner = catRepository.getOwnerById(ownerId)?.owner
                 val ownerWithAddress = owner?.copy(address = address.mapToEntity())
 
                 if(ownerWithAddress != null) {
