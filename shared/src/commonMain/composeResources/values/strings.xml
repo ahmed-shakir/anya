@@ -185,6 +185,7 @@
     <string name="screen_Owner_form_dob_label">Date of Birth</string>
     <string name="screen_Owner_fab_action_add_content_description">Add new owner</string>
     <string name="screen_Owner_list_item_content_description">Swipeable owner list item %1$s, click to view owner details</string>
+    <string name="screen_Owner_action_cats_content_description">Owner\'s cats action</string>
     <string name="screen_Owner_section_personal_details_title">Personal details</string>
     <string name="screen_Owner_section_address_title">Address</string>
     <string name="screen_Owner_section_cats_title">Cats</string>

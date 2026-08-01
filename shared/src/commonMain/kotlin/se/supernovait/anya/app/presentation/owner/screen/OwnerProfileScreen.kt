@@ -39,6 +39,7 @@ import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
 import se.supernovait.anya.app.presentation.owner.component.OwnerForm
+import se.supernovait.anya.app.presentation.owner.component.OwnerProfileShortcuts
 import se.supernovait.anya.app.presentation.owner.state.OwnerScreenState
 import se.supernovait.anya.app.presentation.owner.state.OwnerState
 import se.supernovait.anya.core.domain.util.isoString
@@ -96,6 +97,11 @@ fun OwnerProfileScreen(
 
     ScreenContainer(modifier = modifier) {
         owner?.let { owner ->
+            OwnerProfileShortcuts(
+                owner = owner,
+                onEvent = onEvent,
+                modifier = Modifier.padding(bottom = MaterialTheme.spacing.extraLarge)
+            )
 
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
