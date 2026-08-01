@@ -33,6 +33,12 @@ sealed interface Route : NavigationRoute {
     @Serializable
     data class CatProfile(val id: Long): Route
 
+    @Serializable
+    data class MedicalRecord(val catId: Long = 0L): Route
+
+    @Serializable
+    data class MedicalRecordEntry(val id: Long): Route
+
     companion object {
         fun startScreen(isAuthenticated: Boolean): Route {
             println("StartScreen - isAuthenticated: $isAuthenticated")
@@ -49,6 +55,8 @@ sealed interface Route : NavigationRoute {
                 OwnerProfile::class.qualifiedName -> OwnerProfile(id = 0)
                 Cat::class.qualifiedName -> Cat()
                 CatProfile::class.qualifiedName -> CatProfile(id = 0)
+                MedicalRecord::class.qualifiedName -> MedicalRecord(catId = 0)
+                MedicalRecordEntry::class.qualifiedName -> MedicalRecordEntry(id = 0)
                 else -> defaultRoute
             }
         }

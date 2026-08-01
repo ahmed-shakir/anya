@@ -17,6 +17,7 @@ import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializer
 import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
 import se.supernovait.anya.core.data.database.DatabaseFactory
@@ -32,6 +33,7 @@ val sharedModule = module {
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::CatViewModel)
     viewModelOf(::OwnerViewModel)
+    viewModelOf(::MedicalRecordViewModel)
 
     single {
         Json {

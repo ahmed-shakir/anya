@@ -7,7 +7,7 @@ data class MedicalRecordScreenState(
     val selectedRecord: MedicalRecordState? = null,
     val recordToDelete: MedicalRecordState? = null,
     val currentCatId: Long? = null,
-    val sortType: MedicalRecordSortOption = MedicalRecordSortOption.DEFAULT,
+    val selectedSortOption: MedicalRecordSortOption = MedicalRecordSortOption.DEFAULT,
     val showForm: Boolean = false,
     val showSortMenu: Boolean = false
 )
