@@ -18,7 +18,6 @@ import anya.shared.generated.resources.ic_delete
 import anya.shared.generated.resources.ic_edit
 import anya.shared.generated.resources.ic_keyboard_arrow_right
 import anya.shared.generated.resources.ic_share
-import anya.shared.generated.resources.screen_Owner_image_description
 import anya.shared.generated.resources.screen_Owner_list_item_content_description
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.presentation.app.theme.spacing
@@ -89,7 +88,6 @@ fun OwnerListItem(owner: OwnerState, onEvent: (OwnerScreenEvent) -> Unit) {
                 ProfileImage(
                     uri = owner.imageUri,
                     filename = "${owner.firstname}_${owner.lastname}_${owner.dob}",
-                    description = stringResource(Res.string.screen_Owner_image_description),
                     size = 48.dp
                 )
             },
