@@ -4,10 +4,12 @@ import androidx.test.core.app.ApplicationProvider
 import kotlinx.serialization.json.Json
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
+import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
 import se.supernovait.anya.app.domain.repository.AuthRepository
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.fakes.FakeAuthRepository
 import se.supernovait.anya.app.fakes.FakeCatRepository
+import se.supernovait.anya.app.fakes.FakeDeepLinkHandler
 import se.supernovait.anya.app.fakes.FakeDeviceManager
 import se.supernovait.anya.app.fakes.FakeNetworkHandler
 import se.supernovait.anya.app.fakes.FakeShareHandler
@@ -27,6 +29,7 @@ actual fun getTestModule() = module {
     single<CatRepository> { FakeCatRepository() }
     single<NetworkHandler> { FakeNetworkHandler() }
     single<DeviceManager> { FakeDeviceManager() }
+    single<DeepLinkHandler> { FakeDeepLinkHandler() }
     single<ShareHandler> { FakeShareHandler() }
     single<PdfViewer> { PdfViewer(ApplicationProvider.getApplicationContext()) }
     single { AuthenticationManager(get()) }
