@@ -10,6 +10,7 @@ import se.supernovait.anya.app.data.local.CatDatabase
 import se.supernovait.anya.app.data.local.dao.CatDao
 import se.supernovait.anya.app.data.local.dao.MedicalRecordDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
+import se.supernovait.anya.app.data.remote.InsultCensorApi
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
 import se.supernovait.anya.app.data.repository.CatRepositoryImpl
 import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
@@ -32,6 +33,7 @@ val sharedModule = module {
     singleOf(::AuthenticationManager)
     singleOf(::DeepLinkHandlerImpl).bind<DeepLinkHandler>()
 
+    singleOf(::InsultCensorApi)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
     singleOf(::CatRepositoryImpl).bind<CatRepository>()
 
