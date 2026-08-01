@@ -5,6 +5,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import se.supernovait.anya.app.data.local.entity.Cat
 import se.supernovait.anya.app.data.local.fakes.FakeCatDao
+import se.supernovait.anya.app.data.local.fakes.FakeMedicalRecordDao
 import se.supernovait.anya.app.data.local.fakes.FakeOwnerDao
 import se.supernovait.anya.app.util.AnyaBaseTest
 import kotlin.test.BeforeTest
@@ -15,13 +16,15 @@ import kotlin.test.assertEquals
 class CatRepositoryImplTest : AnyaBaseTest() {
     private lateinit var catDao: FakeCatDao
     private lateinit var ownerDao: FakeOwnerDao
+    private lateinit var medicalRecordDao: FakeMedicalRecordDao
     private lateinit var repository: CatRepositoryImpl
 
     @BeforeTest
     fun setup() {
         catDao = FakeCatDao()
         ownerDao = FakeOwnerDao()
-        repository = CatRepositoryImpl(catDao, ownerDao)
+        medicalRecordDao = FakeMedicalRecordDao()
+        repository = CatRepositoryImpl(catDao, ownerDao, medicalRecordDao)
     }
 
     @Test

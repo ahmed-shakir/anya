@@ -8,6 +8,7 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import se.supernovait.anya.app.data.local.CatDatabase
 import se.supernovait.anya.app.data.local.dao.CatDao
+import se.supernovait.anya.app.data.local.dao.MedicalRecordDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
 import se.supernovait.anya.app.data.repository.CatRepositoryImpl
@@ -49,5 +50,9 @@ val sharedModule = module {
 
     single<OwnerDao> {
         get<CatDatabase>().ownerDao()
+    }
+
+    single<MedicalRecordDao> {
+        get<CatDatabase>().medicalRecordDao()
     }
 }

@@ -5,8 +5,10 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import se.supernovait.anya.app.data.local.dao.CatDao
+import se.supernovait.anya.app.data.local.dao.MedicalRecordDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.local.entity.Cat
+import se.supernovait.anya.app.data.local.entity.MedicalRecord
 import se.supernovait.anya.app.data.local.entity.Owner
 import se.supernovait.anya.app.data.local.entity.relation.CatAndOwner
 import se.supernovait.anya.app.data.local.entity.relation.OwnerWithCats
@@ -15,7 +17,8 @@ import kotlin.coroutines.CoroutineContext
 
 class CatRepositoryImpl(
     private val catDao: CatDao,
-    private val ownerDao: OwnerDao
+    private val ownerDao: OwnerDao,
+    private val medicalRecordDao: MedicalRecordDao
 ) : CatRepository {
     private val ioContext: CoroutineContext = Dispatchers.IO
 
@@ -82,6 +85,38 @@ class CatRepositoryImpl(
     override suspend fun deleteOwner(owner: Owner) {
         withContext(ioContext) {
             ownerDao.delete(owner)
+        }
+    }
+
+    /* *** MEDICAL RECORD *** */
+
+    override fun getAllMedicalRecordsByCatId(catId: Long): Flow<List<MedicalRecord>> {
+        return medicalRecordDao.getAllByCatId(catId)
+    }
+
+    override fun getAllMedicalRecordsByCatIdOrderedByTitle(catId: Long): Flow<List<MedicalRecord>> {
+        return medicalRecordDao.getAllByCatIdOrderedByTitle(catId)
+    }
+
+    override fun getAllMedicalRecordsByCatIdOrderedByDate(catId: Long): Flow<List<MedicalRecord>> {
+        return medicalRecordDao.getAllByCatIdOrderedByDate(catId)
+    }
+
+    override suspend fun getMedicalRecordById(id: Long): MedicalRecord? {
+        return withContext(ioContext) {
+            medicalRecordDao.getById(id)
+        }
+    }
+
+    override suspend fun upsertMedicalRecord(medicalRecord: MedicalRecord) {
+        withContext(ioContext) {
+            medicalRecordDao.upsert(medicalRecord)
+        }
+    }
+
+    override suspend fun deleteMedicalRecord(medicalRecord: MedicalRecord) {
+        withContext(ioContext) {
+            medicalRecordDao.delete(medicalRecord)
         }
     }
 }
