@@ -68,6 +68,9 @@
     <string name="sort_lastname_label">Order by lastname</string>
     <string name="sort_name_label">Order by name</string>
     <string name="sort_dob_label">Order by date of birth</string>
+    <string name="sort_date_label">Order by date</string>
+    <string name="sort_title_label">Order by title</string>
+
 
     <!-- TopBar labels -->
     <string name="topbar_action_back_content_description">Navigate back button</string>
