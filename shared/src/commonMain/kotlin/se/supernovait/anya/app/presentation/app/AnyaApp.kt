@@ -42,6 +42,7 @@ import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordScreenEvent
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.medical_record.screen.MedicalRecordEntryScreen
+import se.supernovait.anya.app.presentation.medical_record.screen.MedicalRecordScreen
 import se.supernovait.anya.app.presentation.navigation.Route
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
@@ -227,6 +228,25 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                         when(event) {
                             is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
                             is CatScreenEvent.NavigateToMedicalRecord -> { /* TODO: implement */}
+                            else -> viewModel.onEvent(event)
+                        }
+                    })
+                }
+
+                composable<Route.MedicalRecord> {
+                    val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+
+                    MedicalRecordScreen(uiState = uiState, onEvent = { event ->
+                        when(event) {
+                            is MedicalRecordScreenEvent.NavigateToRecord -> {
+                                navController.navigate(Route.MedicalRecordEntry(event.id))
+                            }
+                            is MedicalRecordScreenEvent.NavigateToOwner -> {
+                                navController.navigate(Route.OwnerProfile(event.id))
+                            }
                             else -> viewModel.onEvent(event)
                         }
                     })

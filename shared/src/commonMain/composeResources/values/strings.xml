@@ -208,12 +208,14 @@
     <string name="screen_Cat_section_owner_title">Owner</string>
 
     <!-- Medical Record Screen -->
+    <string name="screen_MedicalRecord_search_label">Search...</string>
     <string name="screen_MedicalRecord_form_content_description">Medical record form</string>
     <string name="screen_MedicalRecord_form_type_label">Type</string>
     <string name="screen_MedicalRecord_form_title_label">Title</string>
     <string name="screen_MedicalRecord_form_description_label">Description</string>
     <string name="screen_MedicalRecord_form_date_label">Date</string>
     <string name="screen_MedicalRecord_form_contagious_label">Contagious</string>
+    <string name="screen_MedicalRecord_fab_action_add_content_description">Add new medical record</string>
     <string name="screen_MedicalRecord_list_item_content_description">Swipeable medical record list item %1$s, click to view record details</string>
     <string name="screen_MedicalRecord_section_record_details_title">Medical record details</string>
 
