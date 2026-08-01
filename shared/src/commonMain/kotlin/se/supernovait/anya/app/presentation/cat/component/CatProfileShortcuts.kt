@@ -41,27 +41,31 @@ fun CatProfileShortcuts(
         ShortcutAction(
             icon = Res.drawable.ic_person,
             contentDescription = stringResource(Res.string.screen_Cat_action_owner_content_description),
-            enabled = cat.ownerId != null,
+            enabled = cat.ownerId != null && !cat.isPreview,
             onClick = { onEvent(CatScreenEvent.NavigateToOwner(cat.ownerId ?: 0)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_folder_plus,
             contentDescription = stringResource(Res.string.screen_Cat_action_medical_record_content_description),
+            enabled = !cat.isPreview,
             onClick = { onEvent(CatScreenEvent.NavigateToMedicalRecord(cat.id)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_share,
             contentDescription = stringResource(Res.string.a11y_action_share_content_description, cat.name),
+            enabled = !cat.isPreview,
             onClick = { onEvent(CatScreenEvent.ShareCat(cat)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_delete,
             contentDescription = stringResource(Res.string.a11y_action_delete_content_description, cat.name),
+            enabled = !cat.isPreview,
             onClick = { onEvent(CatScreenEvent.ConfirmDeleteCat(cat)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_file_pdf,
             contentDescription = stringResource(Res.string.screen_Cat_action_pedigree_content_description),
+            enabled = !cat.isPreview,
             onClick = { onEvent(CatScreenEvent.ShowPedigree) }
         )
     )

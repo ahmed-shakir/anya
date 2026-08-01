@@ -14,7 +14,8 @@ class DeepLinkHandlerImpl : DeepLinkHandler {
         val (type, data) = ShareUrlBuilder.parse(url)
 
         if (!type.isNullOrBlank() && !data.isNullOrBlank()) {
-            // TODO: implement
+            val route = Route.Import(type, data)
+            _events.tryEmit(route)
         }
     }
 }

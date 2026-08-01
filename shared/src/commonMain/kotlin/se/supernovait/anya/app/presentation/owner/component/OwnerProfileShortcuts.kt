@@ -35,17 +35,19 @@ fun OwnerProfileShortcuts(
         ShortcutAction(
             icon = Res.drawable.ic_cat,
             contentDescription = stringResource(Res.string.screen_Owner_action_cats_content_description),
-            enabled = owner.cats.isNotEmpty(),
+            enabled = owner.cats.isNotEmpty() && !owner.isPreview,
             onClick = { onEvent(OwnerScreenEvent.NavigateToCats(owner.id)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_share,
             contentDescription = stringResource(Res.string.a11y_action_share_content_description, owner.name),
+            enabled = !owner.isPreview,
             onClick = { onEvent(OwnerScreenEvent.ShareOwner(owner)) }
         ),
         ShortcutAction(
             icon = Res.drawable.ic_delete,
             contentDescription = stringResource(Res.string.a11y_action_delete_content_description),
+            enabled = !owner.isPreview,
             onClick = { onEvent(OwnerScreenEvent.ConfirmDeleteOwner(owner)) }
         )
     )

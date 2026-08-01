@@ -76,4 +76,27 @@ class CatProfileScreenTest : AnyaBaseTest() {
         
         assertEquals(CatScreenEvent.ShowCatForm(cat), capturedEvent)
     }
+
+    @Test
+    fun `clicking medical records triggers NavigateToMedicalRecord event`() = runComposeUiTest {
+        val cat = CatState(id = 1, name = "Whiskers", nickname = "Whiskers", dob = LocalDate.parse("2020-01-01"), breed = "Siamese")
+        var capturedEvent: CatScreenEvent? = null
+
+        setContent {
+            CompositionLocalProvider(
+                LocalAuthState provides AuthenticationState.NotAuthenticated,
+                LocalTopBarState provides TopBarState(),
+                LocalFabState provides FabState()
+            ) {
+                CatProfileScreen(
+                    uiState = CatScreenState(selectedCat = cat),
+                    onEvent = { capturedEvent = it }
+                )
+            }
+        }
+
+        onNodeWithContentDescription("Medical record action", ignoreCase = true).performClick()
+
+        assertEquals(CatScreenEvent.NavigateToMedicalRecord(1L), capturedEvent)
+    }
 }

@@ -27,6 +27,8 @@ import anya.shared.generated.resources.network_status_restricted_label
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
+import se.supernovait.anya.app.domain.model.ShareType
+import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationState
 import se.supernovait.anya.app.presentation.app.auth.LocalAuthState
@@ -37,6 +39,9 @@ import se.supernovait.anya.app.presentation.cat.CatScreenEvent
 import se.supernovait.anya.app.presentation.cat.CatViewModel
 import se.supernovait.anya.app.presentation.cat.screen.CatProfileScreen
 import se.supernovait.anya.app.presentation.cat.screen.CatScreen
+import se.supernovait.anya.app.presentation.import.ImportScreen
+import se.supernovait.anya.app.presentation.import.ImportScreenEvent
+import se.supernovait.anya.app.presentation.import.ImportViewModel
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordScreenEvent
@@ -64,6 +69,7 @@ import se.supernovait.anya.core.presentation.common.action.LocalFabState
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
     val authManager: AuthenticationManager = koinInject<AuthenticationManager>()
     val networkHandler: NetworkHandler = koinInject<NetworkHandler>()
+    val deepLinkHandler: DeepLinkHandler = koinInject<DeepLinkHandler>()
     val authState by authManager.authState.collectAsStateWithLifecycle()
     val networkStatus by networkHandler.connectivity.collectAsStateWithLifecycle(null)
     val deviceManager: DeviceManager = koinInject<DeviceManager>()
@@ -79,6 +85,12 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
             navController.navigate(Route.Welcome) {
                 popUpTo(0) { inclusive = true }
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        deepLinkHandler.events.collect { route ->
+            navController.navigate(route)
         }
     }
 
@@ -156,6 +168,31 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                             StartScreenEvent.NavigateToOwnerScreen -> navController.navigate(Route.Owner)
                             StartScreenEvent.NavigateToProfileScreen -> navController.navigate(Route.OwnerProfile(authManager.getCurrentUser()?.id ?: 0L))
                             StartScreenEvent.SignOut -> authManager.logout()
+                        }
+                    })
+                }
+
+                composable<Route.Import> {
+                    val viewModel: ImportViewModel = koinViewModel<ImportViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(
+                        events = viewModel.events,
+                        snackbarHostState = snackbarHostState,
+                        navController = navController
+                    )
+
+                    ImportScreen(uiState = uiState, onEvent = { event ->
+                        when (event) {
+                            ImportScreenEvent.Cancel -> navController.popBackStack()
+                            ImportScreenEvent.ViewDetails -> {
+                                when (uiState.type) {
+                                    ShareType.CAT -> navController.navigate(Route.CatProfile(id = 0, previewData = uiState.data))
+                                    ShareType.OWNER -> navController.navigate(Route.OwnerProfile(id = 0, previewData = uiState.data))
+                                    null -> {}
+                                }
+                            }
+                            else -> viewModel.onEvent(event)
                         }
                     })
                 }

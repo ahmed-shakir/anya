@@ -18,6 +18,8 @@ data class OwnerState(
 ) {
     val name: String
         get() = "$firstname $lastname"
+    val isPreview: Boolean
+        get() = id == 0L
 
     companion object {
         val empty = OwnerState(firstname = "", lastname = "", dob = null)

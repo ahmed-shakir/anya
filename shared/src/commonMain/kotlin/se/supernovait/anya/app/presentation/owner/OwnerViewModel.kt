@@ -20,6 +20,7 @@ import se.supernovait.anya.app.domain.mapper.mapToDto
 import se.supernovait.anya.app.domain.mapper.mapToEntity
 import se.supernovait.anya.app.domain.mapper.mapToState
 import se.supernovait.anya.app.domain.model.ShareType
+import se.supernovait.anya.app.domain.model.dto.OwnerDto
 import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.address.AddressState
@@ -70,7 +71,11 @@ class OwnerViewModel(
             is OwnerScreenEvent.NavigateToCats -> { /* Handled in AnyaApp */ }
             is OwnerScreenEvent.LoadOwner -> {
                 val args = savedStateHandle.toRoute<Route.OwnerProfile>()
-                getOwnerById(args.id)
+                if (args.id == 0L && args.previewData != null) {
+                    loadPreviewOwner(args.previewData)
+                } else {
+                    getOwnerById(args.id)
+                }
             }
             is OwnerScreenEvent.SaveOwner -> saveOwner(event.owner)
             is OwnerScreenEvent.SaveAddress -> saveAddress(event.ownerId, event.address)
@@ -96,6 +101,19 @@ class OwnerViewModel(
             val owner = ownerWithCats?.owner
             val cats = ownerWithCats?.cats ?: emptyList()
             _uiState.update { currentState -> currentState.copy(selectedOwner = owner?.mapToState(cats)) }
+        }
+    }
+
+    private fun loadPreviewOwner(data: String) {
+        try {
+            val dto = json.decodeFromString<OwnerDto>(data)
+            // Force ID to 0 to flag as preview/unsaved
+            val owner = dto.mapToEntity().copy(id = 0L)
+            _uiState.update { it.copy(selectedOwner = owner.mapToState()) }
+        } catch (e: Exception) {
+            viewModelScope.launch {
+                _events.send(AppEvent.Error(NetworkError.SERIALIZATION))
+            }
         }
     }
 

@@ -21,6 +21,9 @@ data class CatState(
     val address: AddressState? = null,
     val owner: OwnerState? = null
 ) {
+    val isPreview: Boolean
+        get() = id == 0L
+
     companion object {
         val empty = CatState(name = "", nickname = "", dob = null, breed = "")
     }

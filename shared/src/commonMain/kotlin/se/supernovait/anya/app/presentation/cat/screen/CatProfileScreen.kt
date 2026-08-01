@@ -131,7 +131,7 @@ fun CatProfileScreen(
 
                 ScreenSection(
                     title = stringResource(Res.string.screen_Cat_section_personal_details_title),
-                    onEdit = { onEvent(CatScreenEvent.ShowCatForm(cat)) }
+                    onEdit = { onEvent(CatScreenEvent.ShowCatForm(cat)) }.takeUnless { cat.isPreview }
                 ) {
                     AnyaBoldLabel(text = stringResource(Res.string.screen_Cat_form_name_label))
                     AnyaLabel(text = cat.name, modifier = sectionContentPadding)
@@ -156,7 +156,7 @@ fun CatProfileScreen(
 
                 ScreenSection(
                     title = stringResource(Res.string.screen_Cat_section_address_title),
-                    onEdit = { onEvent(CatScreenEvent.ShowAddressForm(cat)) }
+                    onEdit = { onEvent(CatScreenEvent.ShowAddressForm(cat)) }.takeUnless { cat.isPreview }
                 ) {
                     cat.address?.let { address ->
                         AnyaBoldLabel(text = stringResource(Res.string.address_street_label))

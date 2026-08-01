@@ -12,11 +12,14 @@ import se.supernovait.anya.app.data.local.dao.MedicalRecordDao
 import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
 import se.supernovait.anya.app.data.repository.CatRepositoryImpl
+import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
+import se.supernovait.anya.app.domain.navigation.DeepLinkHandlerImpl
 import se.supernovait.anya.app.domain.repository.AuthRepository
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializer
 import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.import.ImportViewModel
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
@@ -27,6 +30,8 @@ expect val platformModule: Module
 val sharedModule = module {
     singleOf(::AppInitializer)
     singleOf(::AuthenticationManager)
+    singleOf(::DeepLinkHandlerImpl).bind<DeepLinkHandler>()
+
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
     singleOf(::CatRepositoryImpl).bind<CatRepository>()
 
@@ -34,6 +39,7 @@ val sharedModule = module {
     viewModelOf(::CatViewModel)
     viewModelOf(::OwnerViewModel)
     viewModelOf(::MedicalRecordViewModel)
+    viewModelOf(::ImportViewModel)
 
     single {
         Json {

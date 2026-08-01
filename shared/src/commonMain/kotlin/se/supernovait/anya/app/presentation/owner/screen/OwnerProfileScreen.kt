@@ -122,7 +122,7 @@ fun OwnerProfileScreen(
 
                 ScreenSection(
                     title = stringResource(Res.string.screen_Owner_section_personal_details_title),
-                    onEdit = { onEvent(OwnerScreenEvent.ShowOwnerForm(owner)) }
+                    onEdit = { onEvent(OwnerScreenEvent.ShowOwnerForm(owner)) }.takeUnless { owner.isPreview }
                 ) {
                     AnyaBoldLabel(text = stringResource(Res.string.screen_Owner_form_full_name_label))
                     AnyaLabel(text = owner.name, modifier = sectionContentPadding)
@@ -136,7 +136,7 @@ fun OwnerProfileScreen(
 
                 ScreenSection(
                     title = stringResource(Res.string.screen_Owner_section_address_title),
-                    onEdit = { onEvent(OwnerScreenEvent.ShowAddressForm(owner)) }
+                    onEdit = { onEvent(OwnerScreenEvent.ShowAddressForm(owner)) }.takeUnless { owner.isPreview }
                 ) {
                     owner.address?.let { address ->
                         AnyaBoldLabel(text = stringResource(Res.string.address_street_label))
@@ -172,6 +172,7 @@ fun OwnerProfileScreen(
                     label = signOutButtonLabel,
                     contentDescription = "$signOutButtonLabel $a11yButtonText",
                     color = MaterialTheme.colorScheme.error,
+                    enabled = !owner.isPreview,
                     onClick = { onEvent(OwnerScreenEvent.SignOut) },
                     modifier = Modifier
                         .padding(top = MaterialTheme.spacing.x2Large)

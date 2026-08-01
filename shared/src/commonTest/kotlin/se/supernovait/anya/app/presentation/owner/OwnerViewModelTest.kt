@@ -110,6 +110,20 @@ class OwnerViewModelTest : AnyaBaseTest() {
         }
     }
 
+    @Test
+    fun `LoadOwner with corrupt JSON emits SERIALIZATION error`() = runTest {
+        val savedStateHandle = SavedStateHandle(mapOf("id" to 0L, "previewData" to "invalid json"))
+        val viewModel = OwnerViewModel(savedStateHandle, catRepository, shareHandler, json)
+
+        viewModel.events.test {
+            viewModel.onEvent(OwnerScreenEvent.LoadOwner)
+            testDispatcher.scheduler.advanceUntilIdle()
+            val event = expectMostRecentItem()
+            assertTrue(event is AppEvent.Error)
+            assertEquals(NetworkError.SERIALIZATION, (event as AppEvent.Error).error)
+        }
+    }
+
     private fun createViewModel(): OwnerViewModel {
         return OwnerViewModel(
             savedStateHandle = SavedStateHandle(),

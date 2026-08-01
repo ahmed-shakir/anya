@@ -174,6 +174,15 @@
     <string name="screen_Start_action_censor_label">Censor text</string>
     <string name="screen_Start_action_censor_content_description">Action to navigate to censor text page</string>
 
+    <!-- Import Screen -->
+    <string name="screen_Import_title">Import Data</string>
+    <string name="screen_Import_message_cat">You received a cat named %1$s.</string>
+    <string name="screen_Import_message_owner">You received an owner named %1$s.</string>
+    <string name="screen_Import_action_import_label">Import</string>
+    <string name="screen_Import_action_view_details_label">View Details</string>
+    <string name="screen_Import_success_message">Successfully imported %1$s.</string>
+    <string name="screen_Import_error_message">Failed to import data.</string>
+
     <!-- Owner Screen -->
     <string name="screen_Owner_search_label">Search...</string>
     <string name="screen_Owner_image_description">Owner image</string>

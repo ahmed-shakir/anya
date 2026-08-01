@@ -101,6 +101,20 @@ class CatViewModelTest : AnyaBaseTest() {
         }
     }
 
+    @Test
+    fun `LoadCat with corrupt JSON emits SERIALIZATION error`() = runTest {
+        val savedStateHandle = SavedStateHandle(mapOf("id" to 0L, "previewData" to "invalid json"))
+        val viewModel = CatViewModel(savedStateHandle, authManager, catRepository, shareHandler, json)
+
+        viewModel.events.test {
+            viewModel.onEvent(CatScreenEvent.LoadCat)
+            testDispatcher.scheduler.advanceUntilIdle()
+            val event = expectMostRecentItem()
+            assertTrue(event is AppEvent.Error)
+            assertEquals(NetworkError.SERIALIZATION, (event as AppEvent.Error).error)
+        }
+    }
+
     private fun createViewModel(ownerId: Long? = null): CatViewModel {
         val savedStateHandle = if (ownerId != null) {
             SavedStateHandle(mapOf("ownerId" to ownerId))

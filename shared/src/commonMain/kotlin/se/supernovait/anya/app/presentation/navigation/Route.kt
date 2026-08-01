@@ -19,19 +19,22 @@ sealed interface Route : NavigationRoute {
     }
 
     @Serializable
+    data class Import(val type: String, val data: String): Route
+
+    @Serializable
     data object CensoredText: Route
 
     @Serializable
     data object Owner: Route
 
     @Serializable
-    data class OwnerProfile(val id: Long): Route
+    data class OwnerProfile(val id: Long, val previewData: String? = null): Route
 
     @Serializable
     data class Cat(val ownerId: Long? = null): Route
 
     @Serializable
-    data class CatProfile(val id: Long): Route
+    data class CatProfile(val id: Long, val previewData: String? = null): Route
 
     @Serializable
     data class MedicalRecord(val catId: Long = 0L): Route
@@ -50,6 +53,7 @@ sealed interface Route : NavigationRoute {
                 Welcome::class.qualifiedName -> Welcome
                 Info::class.qualifiedName -> Info
                 Start::class.qualifiedName -> Start
+                Import::class.qualifiedName -> Import(type = "", data = "")
                 CensoredText::class.qualifiedName -> CensoredText
                 Owner::class.qualifiedName -> Owner
                 OwnerProfile::class.qualifiedName -> OwnerProfile(id = 0)

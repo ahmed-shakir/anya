@@ -20,6 +20,7 @@ import se.supernovait.anya.app.domain.mapper.mapToDto
 import se.supernovait.anya.app.domain.mapper.mapToEntity
 import se.supernovait.anya.app.domain.mapper.mapToState
 import se.supernovait.anya.app.domain.model.ShareType
+import se.supernovait.anya.app.domain.model.dto.CatDto
 import se.supernovait.anya.app.domain.model.sort.CatSortOption
 import se.supernovait.anya.app.domain.repository.CatRepository
 import se.supernovait.anya.app.presentation.address.AddressState
@@ -74,7 +75,11 @@ class CatViewModel(
             is CatScreenEvent.NavigateToMedicalRecord -> { /* Handled in AnyaApp */ }
             is CatScreenEvent.LoadCat -> {
                 val args = savedStateHandle.toRoute<Route.CatProfile>()
-                getCatById(args.id)
+                if (args.id == 0L && args.previewData != null) {
+                    loadPreviewCat(args.previewData)
+                } else {
+                    getCatById(args.id)
+                }
             }
             is CatScreenEvent.SaveCat -> saveCat(event.cat, event.isCurrentUserOwner, event.useOwnerAddress)
             is CatScreenEvent.SaveAddress -> saveAddress(event.catId, event.address)
@@ -101,6 +106,19 @@ class CatViewModel(
             val cat = catAndOwner?.cat
             val owner = catAndOwner?.owner
             _uiState.update { currentState -> currentState.copy(selectedCat = cat?.mapToState(owner)) }
+        }
+    }
+
+    private fun loadPreviewCat(data: String) {
+        try {
+            val dto = json.decodeFromString<CatDto>(data)
+            // Force ID to 0 to flag as preview/unsaved
+            val cat = dto.mapToEntity().copy(id = 0L)
+            _uiState.update { it.copy(selectedCat = cat.mapToState()) }
+        } catch (e: Exception) {
+            viewModelScope.launch {
+                _events.send(AppEvent.Error(NetworkError.SERIALIZATION))
+            }
         }
     }
 

@@ -14,6 +14,7 @@ import se.supernovait.anya.app.fakes.FakeNetworkHandler
 import se.supernovait.anya.app.fakes.FakeShareHandler
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.import.ImportViewModel
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
 import se.supernovait.anya.app.presentation.welcome.WelcomeViewModel
@@ -38,4 +39,5 @@ actual fun getTestModule() = module {
     viewModelOf(::CatViewModel)
     viewModelOf(::OwnerViewModel)
     viewModelOf(::MedicalRecordViewModel)
+    viewModelOf(::ImportViewModel)
 }
