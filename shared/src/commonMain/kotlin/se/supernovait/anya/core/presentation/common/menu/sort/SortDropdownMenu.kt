@@ -23,7 +23,7 @@ import anya.shared.generated.resources.ic_check
 import anya.shared.generated.resources.ic_sort
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.domain.model.sort.OwnerSortOption
-import se.supernovait.anya.app.presentation.app.theme.spacing
+import se.supernovait.anya.app.presentation.app.theme.sizing
 import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.action.AnyaIconButton
 import se.supernovait.anya.core.presentation.common.preview.ComponentPreviewContainer
@@ -34,7 +34,7 @@ fun <T> SortDropdownMenu(
     selectedSortOption: T,
     onSortOptionSelected: (T) -> Unit,
     modifier: Modifier = Modifier,
-    iconSize: Dp = MaterialTheme.spacing.iconMedium
+    iconSize: Dp = MaterialTheme.sizing.icon.default
 ) where T : Enum<T>, T : SortOption {
     var expanded by remember { mutableStateOf(false) }
 

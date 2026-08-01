@@ -1,7 +1,7 @@
 package se.supernovait.anya.app.fakes
 
-import se.supernovait.anya.core.domain.model.Platform
 import se.supernovait.anya.core.domain.manager.DeviceManager
+import se.supernovait.anya.core.domain.model.Platform
 
 class FakeDeviceManager : DeviceManager {
     override fun getPlatform(): Platform = object : Platform {

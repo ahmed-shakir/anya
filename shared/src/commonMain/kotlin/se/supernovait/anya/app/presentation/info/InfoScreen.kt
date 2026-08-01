@@ -26,6 +26,7 @@ import anya.shared.generated.resources.screen_Info_title
 import anya.shared.generated.resources.supernova_logo_star_color_v2
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import se.supernovait.anya.app.presentation.app.theme.sizing
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.container.ScreenContainer
@@ -69,7 +70,7 @@ fun InfoScreen(uiState: InfoScreenState, modifier: Modifier = Modifier) {
         ) {
             AnyaIcon(
                 icon = Res.drawable.supernova_logo_star_color_v2,
-                size = MaterialTheme.spacing.iconSmall
+                size = MaterialTheme.sizing.icon.default
             )
             AnyaLabel(text = stringResource(Res.string.app_family))
         }

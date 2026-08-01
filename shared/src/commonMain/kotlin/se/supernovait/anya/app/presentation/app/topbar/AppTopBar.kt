@@ -25,6 +25,7 @@ import anya.shared.generated.resources.ic_more_vert
 import anya.shared.generated.resources.topbar_action_back_content_description
 import anya.shared.generated.resources.topbar_action_menu_content_description
 import org.jetbrains.compose.resources.stringResource
+import se.supernovait.anya.app.presentation.app.theme.sizing
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.action.AnyaIconButton
@@ -48,7 +49,7 @@ fun AppTopBar(state: TopBarState = TopBarState(), navigateUp: () -> Unit = { }, 
                     AnyaIcon(
                         icon = it,
                         contentDescription = Res.string.app_logo_content_description,
-                        modifier = Modifier.size(MaterialTheme.spacing.iconLarge)
+                        modifier = Modifier.size(MaterialTheme.sizing.icon.extraLarge)
                     )
                 }
                 state.title?.let {
@@ -94,7 +95,7 @@ fun AppTopBar(state: TopBarState = TopBarState(), navigateUp: () -> Unit = { }, 
                                 leadingIcon = {
                                     AnyaIcon(
                                         icon = action.icon,
-                                        size = MaterialTheme.spacing.iconSmall
+                                        size = MaterialTheme.sizing.icon.default
                                     )
                                 },
                                 onClick = {

@@ -1,5 +1,6 @@
 package se.supernovait.anya.app.presentation.app
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -65,6 +66,7 @@ import se.supernovait.anya.core.domain.network.NetworkStatusType
 import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.action.FabState
 import se.supernovait.anya.core.presentation.common.action.LocalFabState
+import se.supernovait.anya.core.presentation.common.network.NetworkIndicator
 
 @Composable
 fun AnyaApp(navController: NavHostController = rememberNavController()) {
@@ -125,187 +127,193 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
             }
         ) { innerPadding ->
-            NavHost(navController = navController, startDestination = startScreen, modifier = Modifier.padding(innerPadding)) {
-                composable<Route.Welcome> {
-                    val viewModel: WelcomeViewModel = koinViewModel<WelcomeViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+            Column(modifier = Modifier.padding(innerPadding)) {
+                NetworkIndicator(type = networkStatus?.type)
+                NavHost(navController = navController, startDestination = startScreen) {
+                    composable<Route.Welcome> {
+                        val viewModel: WelcomeViewModel = koinViewModel<WelcomeViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                    handleAppEvents(
-                        events = viewModel.events,
-                        snackbarHostState = snackbarHostState,
-                        navController = navController
-                    )
-
-                    WelcomeScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            WelcomeScreenEvent.NavigateToInfo -> navController.navigate(Route.Info)
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
-
-                composable<Route.Info> {
-                    val networkStatusText = when(networkStatus?.type) {
-                        NetworkStatusType.OFFLINE -> stringResource(Res.string.network_status_offline_label)
-                        NetworkStatusType.ONLINE -> stringResource(Res.string.network_status_online_label, networkStatus!!.networkType)
-                        NetworkStatusType.RESTRICTED -> stringResource(Res.string.network_status_restricted_label, networkStatus!!.networkType)
-                        else -> stringResource(Res.string.network_status_loading_label)
-                    }
-                    InfoScreen(
-                        uiState = InfoScreenState(
-                            platform = deviceManager.getPlatform(),
-                            batteryLevel = "${deviceManager.getBatteryLevel()}%",
-                            networkStatus = networkStatusText
+                        handleAppEvents(
+                            events = viewModel.events,
+                            snackbarHostState = snackbarHostState,
+                            navController = navController
                         )
-                    )
-                }
 
-                composable<Route.Start> {
-                    StartScreen(onEvent = { action ->
-                        when(action) {
-                            StartScreenEvent.NavigateToCatScreen -> navController.navigate(Route.Cat())
-                            StartScreenEvent.NavigateToCensoredTextScreen -> navController.navigate(Route.CensoredText)
-                            StartScreenEvent.NavigateToInfoScreen -> navController.navigate(Route.Info)
-                            StartScreenEvent.NavigateToOwnerScreen -> navController.navigate(Route.Owner)
-                            StartScreenEvent.NavigateToProfileScreen -> navController.navigate(Route.OwnerProfile(authManager.getCurrentUser()?.id ?: 0L))
-                            StartScreenEvent.SignOut -> authManager.logout()
+                        WelcomeScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                WelcomeScreenEvent.NavigateToInfo -> navController.navigate(Route.Info)
+                                else -> viewModel.onEvent(event)
+                            }
+                        })
+                    }
+
+                    composable<Route.Info> {
+                        val networkStatusText = when (networkStatus?.type) {
+                            NetworkStatusType.OFFLINE -> stringResource(Res.string.network_status_offline_label)
+                            NetworkStatusType.ONLINE -> stringResource(Res.string.network_status_online_label, networkStatus!!.networkType)
+                            NetworkStatusType.RESTRICTED -> stringResource(Res.string.network_status_restricted_label, networkStatus!!.networkType)
+                            else -> stringResource(Res.string.network_status_loading_label)
                         }
-                    })
-                }
+                        InfoScreen(
+                            uiState = InfoScreenState(
+                                platform = deviceManager.getPlatform(),
+                                batteryLevel = "${deviceManager.getBatteryLevel()}%",
+                                networkStatus = networkStatusText
+                            )
+                        )
+                    }
 
-                composable<Route.Import> {
-                    val viewModel: ImportViewModel = koinViewModel<ImportViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    composable<Route.Start> {
+                        StartScreen(onEvent = { action ->
+                            when (action) {
+                                StartScreenEvent.NavigateToCatScreen -> navController.navigate(Route.Cat())
+                                StartScreenEvent.NavigateToCensoredTextScreen -> navController.navigate(Route.CensoredText)
+                                StartScreenEvent.NavigateToInfoScreen -> navController.navigate(Route.Info)
+                                StartScreenEvent.NavigateToOwnerScreen -> navController.navigate(Route.Owner)
+                                StartScreenEvent.NavigateToProfileScreen -> navController.navigate(Route.OwnerProfile(authManager.getCurrentUser()?.id ?: 0L))
+                                StartScreenEvent.SignOut -> authManager.logout()
+                            }
+                        })
+                    }
 
-                    handleAppEvents(
-                        events = viewModel.events,
-                        snackbarHostState = snackbarHostState,
-                        navController = navController
-                    )
+                    composable<Route.Import> {
+                        val viewModel: ImportViewModel = koinViewModel<ImportViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                    ImportScreen(uiState = uiState, onEvent = { event ->
-                        when (event) {
-                            ImportScreenEvent.Cancel -> navController.popBackStack()
-                            ImportScreenEvent.ViewDetails -> {
-                                when (uiState.type) {
-                                    ShareType.CAT -> navController.navigate(Route.CatProfile(id = 0, previewData = uiState.data))
-                                    ShareType.OWNER -> navController.navigate(Route.OwnerProfile(id = 0, previewData = uiState.data))
-                                    null -> {}
+                        handleAppEvents(
+                            events = viewModel.events,
+                            snackbarHostState = snackbarHostState,
+                            navController = navController
+                        )
+
+                        ImportScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                ImportScreenEvent.Cancel -> navController.popBackStack()
+                                ImportScreenEvent.ViewDetails -> {
+                                    when (uiState.type) {
+                                        ShareType.CAT -> navController.navigate(Route.CatProfile(id = 0, previewData = uiState.data))
+                                        ShareType.OWNER -> navController.navigate(Route.OwnerProfile(id = 0, previewData = uiState.data))
+                                        null -> {}
+                                    }
                                 }
+
+                                else -> viewModel.onEvent(event)
                             }
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
+                        })
+                    }
 
-                composable<Route.CensoredText> {
-                    val viewModel: CensoredTextViewModel = koinViewModel<CensoredTextViewModel>()
+                    composable<Route.CensoredText> {
+                        val viewModel: CensoredTextViewModel = koinViewModel<CensoredTextViewModel>()
 
-                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+                        handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
 
-                    CensoredTextScreen(viewModel = viewModel, onEvent = viewModel::onEvent)
-                }
+                        CensoredTextScreen(viewModel = viewModel, onEvent = viewModel::onEvent)
+                    }
 
-                composable<Route.Owner> {
-                    val viewModel: OwnerViewModel = koinViewModel<OwnerViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    composable<Route.Owner> {
+                        val viewModel: OwnerViewModel = koinViewModel<OwnerViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+                        handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
 
-                    OwnerScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            is OwnerScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
-
-                composable<Route.OwnerProfile> {
-                    val viewModel: OwnerViewModel = koinViewModel<OwnerViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-                    handleAppEvents(
-                        events = viewModel.events,
-                        snackbarHostState = snackbarHostState,
-                        navController = navController
-                    )
-
-                    viewModel.onEvent(OwnerScreenEvent.LoadOwner)
-                    OwnerProfileScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            is OwnerScreenEvent.NavigateToCats -> navController.navigate(Route.Cat(ownerId = event.ownerId))
-                            OwnerScreenEvent.SignOut -> authManager.logout()
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
-
-                composable<Route.Cat> {
-                    val viewModel: CatViewModel = koinViewModel<CatViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
-
-                    CatScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            is CatScreenEvent.NavigateToCat -> navController.navigate(Route.CatProfile(event.id))
-                            is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
-
-                composable<Route.CatProfile> {
-                    val viewModel: CatViewModel = koinViewModel<CatViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-                    handleAppEvents(
-                        events = viewModel.events,
-                        snackbarHostState = snackbarHostState,
-                        navController = navController
-                    )
-
-                    viewModel.onEvent(CatScreenEvent.LoadCat)
-                    CatProfileScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
-                            is CatScreenEvent.NavigateToMedicalRecord -> navController.navigate(Route.MedicalRecord(event.catId))
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
-
-                composable<Route.MedicalRecord> {
-                    val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-
-                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
-
-                    MedicalRecordScreen(uiState = uiState, onEvent = { event ->
-                        when(event) {
-                            is MedicalRecordScreenEvent.NavigateToRecord -> {
-                                navController.navigate(Route.MedicalRecordEntry(event.id))
+                        OwnerScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                is OwnerScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                                else -> viewModel.onEvent(event)
                             }
-                            is MedicalRecordScreenEvent.NavigateToOwner -> {
-                                navController.navigate(Route.OwnerProfile(event.id))
+                        })
+                    }
+
+                    composable<Route.OwnerProfile> {
+                        val viewModel: OwnerViewModel = koinViewModel<OwnerViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                        handleAppEvents(
+                            events = viewModel.events,
+                            snackbarHostState = snackbarHostState,
+                            navController = navController
+                        )
+
+                        viewModel.onEvent(OwnerScreenEvent.LoadOwner)
+                        OwnerProfileScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                is OwnerScreenEvent.NavigateToCats -> navController.navigate(Route.Cat(ownerId = event.ownerId))
+                                OwnerScreenEvent.SignOut -> authManager.logout()
+                                else -> viewModel.onEvent(event)
                             }
-                            else -> viewModel.onEvent(event)
-                        }
-                    })
-                }
+                        })
+                    }
 
-                composable<Route.MedicalRecordEntry> {
-                    val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                    composable<Route.Cat> {
+                        val viewModel: CatViewModel = koinViewModel<CatViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-                    handleAppEvents(
-                        events = viewModel.events,
-                        snackbarHostState = snackbarHostState,
-                        navController = navController
-                    )
+                        handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
 
-                    viewModel.onEvent(MedicalRecordScreenEvent.LoadRecord)
-                    MedicalRecordEntryScreen(uiState = uiState, onEvent = viewModel::onEvent)
+                        CatScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                is CatScreenEvent.NavigateToCat -> navController.navigate(Route.CatProfile(event.id))
+                                is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                                else -> viewModel.onEvent(event)
+                            }
+                        })
+                    }
+
+                    composable<Route.CatProfile> {
+                        val viewModel: CatViewModel = koinViewModel<CatViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                        handleAppEvents(
+                            events = viewModel.events,
+                            snackbarHostState = snackbarHostState,
+                            navController = navController
+                        )
+
+                        viewModel.onEvent(CatScreenEvent.LoadCat)
+                        CatProfileScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
+                                is CatScreenEvent.NavigateToMedicalRecord -> navController.navigate(Route.MedicalRecord(event.catId))
+                                else -> viewModel.onEvent(event)
+                            }
+                        })
+                    }
+
+                    composable<Route.MedicalRecord> {
+                        val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                        handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+
+                        MedicalRecordScreen(uiState = uiState, onEvent = { event ->
+                            when (event) {
+                                is MedicalRecordScreenEvent.NavigateToRecord -> {
+                                    navController.navigate(Route.MedicalRecordEntry(event.id))
+                                }
+
+                                is MedicalRecordScreenEvent.NavigateToOwner -> {
+                                    navController.navigate(Route.OwnerProfile(event.id))
+                                }
+
+                                else -> viewModel.onEvent(event)
+                            }
+                        })
+                    }
+
+                    composable<Route.MedicalRecordEntry> {
+                        val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
+                        val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                        handleAppEvents(
+                            events = viewModel.events,
+                            snackbarHostState = snackbarHostState,
+                            navController = navController
+                        )
+
+                        viewModel.onEvent(MedicalRecordScreenEvent.LoadRecord)
+                        MedicalRecordEntryScreen(uiState = uiState, onEvent = viewModel::onEvent)
+                    }
                 }
             }
         }

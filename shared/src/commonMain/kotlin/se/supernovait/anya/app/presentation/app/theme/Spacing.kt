@@ -19,11 +19,6 @@ data class Spacing(
     val x2Large: Dp = SpacingDefaults.X2_LARGE.dp,
     val x3Large: Dp = SpacingDefaults.X3_LARGE.dp,
     val x4Large: Dp = SpacingDefaults.X4_LARGE.dp,
-
-    // ICON SIZE
-    val iconSmall: Dp = 24.dp,
-    val iconMedium: Dp = 32.dp,
-    val iconLarge: Dp = 40.dp
 )
 
 val LocalSpacing = staticCompositionLocalOf { Spacing() }
