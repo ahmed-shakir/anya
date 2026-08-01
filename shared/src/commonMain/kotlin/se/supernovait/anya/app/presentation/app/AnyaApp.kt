@@ -227,7 +227,7 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                     CatProfileScreen(uiState = uiState, onEvent = { event ->
                         when(event) {
                             is CatScreenEvent.NavigateToOwner -> navController.navigate(Route.OwnerProfile(event.id))
-                            is CatScreenEvent.NavigateToMedicalRecord -> { /* TODO: implement */}
+                            is CatScreenEvent.NavigateToMedicalRecord -> navController.navigate(Route.MedicalRecord(event.catId))
                             else -> viewModel.onEvent(event)
                         }
                     })

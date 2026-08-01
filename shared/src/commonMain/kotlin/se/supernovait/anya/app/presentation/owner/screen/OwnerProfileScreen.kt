@@ -24,11 +24,14 @@ import anya.shared.generated.resources.auth_action_sign_out_label
 import anya.shared.generated.resources.dialog_delete_confirmation_message
 import anya.shared.generated.resources.dialog_delete_confirmation_title
 import anya.shared.generated.resources.ic_delete
+import anya.shared.generated.resources.screen_Owner_action_cats_label_many
+import anya.shared.generated.resources.screen_Owner_action_cats_label_one
 import anya.shared.generated.resources.screen_Owner_form_dob_label
 import anya.shared.generated.resources.screen_Owner_form_full_name_label
 import anya.shared.generated.resources.screen_Owner_form_username_label
 import anya.shared.generated.resources.screen_Owner_image_description
 import anya.shared.generated.resources.screen_Owner_section_address_title
+import anya.shared.generated.resources.screen_Owner_section_cats_title
 import anya.shared.generated.resources.screen_Owner_section_personal_details_title
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.presentation.address.AddressForm
@@ -142,6 +145,20 @@ fun OwnerProfileScreen(
                         AnyaLabel(text = address.county, modifier = sectionContentPadding)
                         AnyaBoldLabel(text = stringResource(Res.string.address_country_label))
                         AnyaLabel(text = address.country)
+                    }
+                }
+
+                ScreenSection(title = stringResource(Res.string.screen_Owner_section_cats_title)) {
+                    if(owner.cats.isNotEmpty()) {
+                        val numOfCats = owner.cats.size
+                        val labelId = if(numOfCats == 1) Res.string.screen_Owner_action_cats_label_one
+                        else Res.string.screen_Owner_action_cats_label_many
+
+                        AnyaTextAction(
+                            label = stringResource(labelId, numOfCats),
+                            color = MaterialTheme.colorScheme.onSurface,
+                            onClick = { onEvent(OwnerScreenEvent.NavigateToCats(owner.id)) }
+                        )
                     }
                 }
 

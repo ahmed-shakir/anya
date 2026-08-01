@@ -42,9 +42,11 @@ import se.supernovait.anya.app.presentation.address.AddressState
 import se.supernovait.anya.app.presentation.app.theme.spacing
 import se.supernovait.anya.app.presentation.cat.CatScreenEvent
 import se.supernovait.anya.app.presentation.cat.component.CatForm
+import se.supernovait.anya.app.presentation.cat.component.CatProfileShortcuts
 import se.supernovait.anya.app.presentation.cat.state.CatScreenState
 import se.supernovait.anya.app.presentation.cat.state.CatState
 import se.supernovait.anya.core.domain.util.isoString
+import se.supernovait.anya.core.presentation.common.Document
 import se.supernovait.anya.core.presentation.common.ProfileImage
 import se.supernovait.anya.core.presentation.common.action.AnyaTextAction
 import se.supernovait.anya.core.presentation.common.container.ScreenContainer
@@ -98,6 +100,18 @@ fun CatProfileScreen(
 
     ScreenContainer(modifier = modifier) {
         cat?.let { cat ->
+            CatProfileShortcuts(
+                cat = cat,
+                onEvent = onEvent,
+                modifier = Modifier.padding(bottom = MaterialTheme.spacing.extraLarge)
+            )
+            Document(
+                uri = cat.pedigreeUri,
+                expandMenu = uiState.showFileMenu,
+                onDismissRequest = { onEvent(CatScreenEvent.HidePedigree) },
+                onDocumentSelected = { uri -> onEvent(CatScreenEvent.SaveCat(cat.copy(pedigreeUri = uri))) }
+            )
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
