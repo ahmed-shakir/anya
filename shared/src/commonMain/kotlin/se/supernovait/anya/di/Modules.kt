@@ -13,13 +13,16 @@ import se.supernovait.anya.app.data.local.dao.OwnerDao
 import se.supernovait.anya.app.data.remote.InsultCensorApi
 import se.supernovait.anya.app.data.repository.AuthRepositoryImpl
 import se.supernovait.anya.app.data.repository.CatRepositoryImpl
+import se.supernovait.anya.app.data.repository.InsultCensorRepositoryImpl
 import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
 import se.supernovait.anya.app.domain.navigation.DeepLinkHandlerImpl
 import se.supernovait.anya.app.domain.repository.AuthRepository
 import se.supernovait.anya.app.domain.repository.CatRepository
+import se.supernovait.anya.app.domain.repository.InsultCensorRepository
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.app.initialization.AppInitializer
 import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextViewModel
 import se.supernovait.anya.app.presentation.import.ImportViewModel
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
@@ -36,7 +39,9 @@ val sharedModule = module {
     singleOf(::InsultCensorApi)
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
     singleOf(::CatRepositoryImpl).bind<CatRepository>()
+    singleOf(::InsultCensorRepositoryImpl).bind<InsultCensorRepository>()
 
+    viewModelOf(::CensoredTextViewModel)
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::CatViewModel)
     viewModelOf(::OwnerViewModel)

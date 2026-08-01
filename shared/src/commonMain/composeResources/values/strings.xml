@@ -183,6 +183,12 @@
     <string name="screen_Import_success_message">Successfully imported %1$s.</string>
     <string name="screen_Import_error_message">Failed to import data.</string>
 
+    <!-- Censored Text Screen -->
+    <string name="screen_CensoredText_textField_label">Uncensored text</string>
+    <string name="screen_CensoredText_action_censor_label">Censor</string>
+    <string name="screen_CensoredText_section_results_title">Results</string>
+    <string name="screen_CensoredText_counter_text">This feature was used %1$d times</string>
+
     <!-- Owner Screen -->
     <string name="screen_Owner_search_label">Search...</string>
     <string name="screen_Owner_image_description">Owner image</string>

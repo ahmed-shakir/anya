@@ -6,14 +6,17 @@ import org.koin.dsl.module
 import se.supernovait.anya.app.domain.navigation.DeepLinkHandler
 import se.supernovait.anya.app.domain.repository.AuthRepository
 import se.supernovait.anya.app.domain.repository.CatRepository
+import se.supernovait.anya.app.domain.repository.InsultCensorRepository
 import se.supernovait.anya.app.fakes.FakeAuthRepository
 import se.supernovait.anya.app.fakes.FakeCatRepository
 import se.supernovait.anya.app.fakes.FakeDeepLinkHandler
 import se.supernovait.anya.app.fakes.FakeDeviceManager
+import se.supernovait.anya.app.fakes.FakeInsultCensorRepository
 import se.supernovait.anya.app.fakes.FakeNetworkHandler
 import se.supernovait.anya.app.fakes.FakeShareHandler
 import se.supernovait.anya.app.presentation.app.auth.AuthenticationManager
 import se.supernovait.anya.app.presentation.cat.CatViewModel
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextViewModel
 import se.supernovait.anya.app.presentation.import.ImportViewModel
 import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
@@ -31,10 +34,12 @@ actual fun getTestModule() = module {
     single<DeviceManager> { FakeDeviceManager() }
     single<DeepLinkHandler> { FakeDeepLinkHandler() }
     single<ShareHandler> { FakeShareHandler() }
+    single<InsultCensorRepository> { FakeInsultCensorRepository() }
     single<PdfViewer> { PdfViewer() }
     single { AuthenticationManager(get()) }
     single { Json { ignoreUnknownKeys = true; coerceInputValues = true } }
 
+    viewModelOf(::CensoredTextViewModel)
     viewModelOf(::WelcomeViewModel)
     viewModelOf(::CatViewModel)
     viewModelOf(::OwnerViewModel)

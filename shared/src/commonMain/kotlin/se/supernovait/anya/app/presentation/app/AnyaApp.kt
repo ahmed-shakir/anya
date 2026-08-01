@@ -6,7 +6,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -39,6 +38,8 @@ import se.supernovait.anya.app.presentation.cat.CatScreenEvent
 import se.supernovait.anya.app.presentation.cat.CatViewModel
 import se.supernovait.anya.app.presentation.cat.screen.CatProfileScreen
 import se.supernovait.anya.app.presentation.cat.screen.CatScreen
+import se.supernovait.anya.app.presentation.censored_text.CensoredTextViewModel
+import se.supernovait.anya.app.presentation.censored_text.screen.CensoredTextScreen
 import se.supernovait.anya.app.presentation.import.ImportScreen
 import se.supernovait.anya.app.presentation.import.ImportScreenEvent
 import se.supernovait.anya.app.presentation.import.ImportViewModel
@@ -198,7 +199,11 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                 }
 
                 composable<Route.CensoredText> {
-                    Text("Route.CensoredText")
+                    val viewModel: CensoredTextViewModel = koinViewModel<CensoredTextViewModel>()
+
+                    handleAppEvents(events = viewModel.events, snackbarHostState = snackbarHostState)
+
+                    CensoredTextScreen(viewModel = viewModel, onEvent = viewModel::onEvent)
                 }
 
                 composable<Route.Owner> {
