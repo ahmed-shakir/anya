@@ -1,6 +1,8 @@
 package se.supernovait.anya.app.presentation.info
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import anya.shared.generated.resources.Res
+import anya.shared.generated.resources.app_family
 import anya.shared.generated.resources.app_icon
 import anya.shared.generated.resources.app_logo_content_description
 import anya.shared.generated.resources.app_version
@@ -20,12 +23,15 @@ import anya.shared.generated.resources.device
 import anya.shared.generated.resources.network_status
 import anya.shared.generated.resources.screen_Info_text_quote
 import anya.shared.generated.resources.screen_Info_title
+import anya.shared.generated.resources.supernova_logo_star_color_v2
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import se.supernovait.anya.app.presentation.app.theme.spacing
+import se.supernovait.anya.core.presentation.common.AnyaIcon
 import se.supernovait.anya.core.presentation.common.container.ScreenContainer
 import se.supernovait.anya.core.presentation.common.preview.ScreenPreviewContainer
 import se.supernovait.anya.core.presentation.common.text.AnyaCopyright
+import se.supernovait.anya.core.presentation.common.text.AnyaLabel
 import se.supernovait.anya.core.presentation.common.text.AnyaQuote
 import se.supernovait.anya.core.presentation.common.text.AnyaTitle
 
@@ -54,6 +60,18 @@ fun InfoScreen(uiState: InfoScreenState, modifier: Modifier = Modifier) {
             AnyaCopyright(text = stringResource(Res.string.device, uiState.platform.name))
             AnyaCopyright(text = stringResource(Res.string.network_status, uiState.networkStatus))
             AnyaCopyright(text = stringResource(Res.string.current_battery_level, uiState.batteryLevel))
+        }
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small, Alignment.CenterHorizontally),
+            modifier = Modifier.fillMaxWidth().padding(top = MaterialTheme.spacing.large)
+        ) {
+            AnyaIcon(
+                icon = Res.drawable.supernova_logo_star_color_v2,
+                size = MaterialTheme.spacing.iconSmall
+            )
+            AnyaLabel(text = stringResource(Res.string.app_family))
         }
     }
 }

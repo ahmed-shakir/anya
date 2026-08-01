@@ -6,6 +6,7 @@
     <string name="network_status">Network status: %1$s</string>
     <string name="current_battery_level">Current battery level: %1$s</string>
     <string name="created_by">Made by Ahmed Shakir</string>
+    <string name="app_family">a part of Supernova</string>
 
     <string name="app_logo_content_description">App logo</string>
 
