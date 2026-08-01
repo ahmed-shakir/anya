@@ -39,6 +39,9 @@ import se.supernovait.anya.app.presentation.cat.screen.CatProfileScreen
 import se.supernovait.anya.app.presentation.cat.screen.CatScreen
 import se.supernovait.anya.app.presentation.info.InfoScreen
 import se.supernovait.anya.app.presentation.info.InfoScreenState
+import se.supernovait.anya.app.presentation.medical_record.MedicalRecordScreenEvent
+import se.supernovait.anya.app.presentation.medical_record.MedicalRecordViewModel
+import se.supernovait.anya.app.presentation.medical_record.screen.MedicalRecordEntryScreen
 import se.supernovait.anya.app.presentation.navigation.Route
 import se.supernovait.anya.app.presentation.owner.OwnerScreenEvent
 import se.supernovait.anya.app.presentation.owner.OwnerViewModel
@@ -227,6 +230,20 @@ fun AnyaApp(navController: NavHostController = rememberNavController()) {
                             else -> viewModel.onEvent(event)
                         }
                     })
+                }
+
+                composable<Route.MedicalRecordEntry> {
+                    val viewModel: MedicalRecordViewModel = koinViewModel<MedicalRecordViewModel>()
+                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+
+                    handleAppEvents(
+                        events = viewModel.events,
+                        snackbarHostState = snackbarHostState,
+                        navController = navController
+                    )
+
+                    viewModel.onEvent(MedicalRecordScreenEvent.LoadRecord)
+                    MedicalRecordEntryScreen(uiState = uiState, onEvent = viewModel::onEvent)
                 }
             }
         }

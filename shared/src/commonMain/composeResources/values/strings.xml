@@ -71,13 +71,13 @@
     <string name="sort_date_label">Order by date</string>
     <string name="sort_title_label">Order by title</string>
 
-
     <!-- TopBar labels -->
     <string name="topbar_action_back_content_description">Navigate back button</string>
     <string name="topbar_action_menu_content_description">Top bar menu button</string>
 
     <!-- Default action labels -->
     <string name="save_action_label">Save</string>
+    <string name="delete_action_label">Delete %1$s</string>
 
     <!-- Default dialog labels -->
     <string name="default_dialog_confirm_action_label">Confirm</string>
@@ -215,6 +215,7 @@
     <string name="screen_MedicalRecord_form_date_label">Date</string>
     <string name="screen_MedicalRecord_form_contagious_label">Contagious</string>
     <string name="screen_MedicalRecord_list_item_content_description">Swipeable medical record list item %1$s, click to view record details</string>
+    <string name="screen_MedicalRecord_section_record_details_title">Medical record details</string>
 
     <!-- Secure screens - authenticated mode -->
 
