@@ -3,11 +3,14 @@ package se.supernovait.anya.di
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.RoomDatabase
+import io.ktor.client.HttpClient
+import io.ktor.client.engine.darwin.Darwin
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import se.supernovait.anya.app.data.database.DatabaseManager
 import se.supernovait.anya.app.data.local.CatDatabase
+import se.supernovait.anya.core.data.network.HttpClientFactory
 import se.supernovait.anya.core.data.network.IosNetworkHandler
 import se.supernovait.anya.core.data.preferences.createDataStore
 import se.supernovait.anya.core.data.sharing.IosShareHandler
@@ -24,6 +27,10 @@ actual val platformModule = module {
 
     single<NetworkHandler> {
         IosNetworkHandler()
+    }
+
+    single<HttpClient> {
+        HttpClientFactory.create(Darwin.create())
     }
 
     single<RoomDatabase.Builder<CatDatabase>> {
