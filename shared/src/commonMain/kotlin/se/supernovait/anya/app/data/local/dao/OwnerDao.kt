@@ -37,6 +37,9 @@ interface OwnerDao {
     @Query("SELECT * FROM owners WHERE username = :username")
     suspend fun getUserByUsername(username: String): Owner?
 
+    @Query("SELECT * FROM owners WHERE id = :id")
+    fun observeUserById(id: Long): Flow<Owner?>
+
     @Upsert
     suspend fun upsert(owner: Owner): Long
 

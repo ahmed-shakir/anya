@@ -23,6 +23,10 @@ class AuthRepositoryImpl(
         }
     }
 
+    override fun observeUserById(id: Long): Flow<Owner?> {
+        return ownerDao.observeUserById(id)
+    }
+
     override suspend fun getCurrentUserId(): Long? {
         return observeCurrentUserId().firstOrNull()
     }

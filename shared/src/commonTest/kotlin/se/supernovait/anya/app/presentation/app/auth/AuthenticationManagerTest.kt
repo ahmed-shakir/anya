@@ -53,6 +53,22 @@ class AuthenticationManagerTest {
     }
 
     @Test
+    fun `when user profile is updated state is updated with new user object`() = runTest {
+        val user = Owner(id = 1, firstname = "John", lastname = "Doe", username = "johndoe", dob = "1990-01-01")
+        authRepository.emitUser(user)
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        val updatedUser = user.copy(firstname = "Johnny")
+        authRepository.emitUser(updatedUser)
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        assertEquals(updatedUser, authManager.getCurrentUser())
+        val currentState = authManager.getCurrentState()
+        assertTrue(currentState is AuthenticationState.Authenticated)
+        assertEquals(updatedUser, currentState.user)
+    }
+
+    @Test
     fun `when user logs out state becomes NotAuthenticated`() = runTest {
         val user = Owner(id = 1, firstname = "John", lastname = "Doe", username = "johndoe", dob = "1990-01-01")
         authRepository.emitUser(user)

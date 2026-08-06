@@ -2,10 +2,14 @@ package se.supernovait.anya.app.presentation.app.auth
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -28,16 +32,20 @@ class AuthenticationManager(private val authRepository: AuthRepository) {
         observeAuthChanges()
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun observeAuthChanges() {
         authRepository.observeCurrentUserId()
-            .onEach { userId ->
+            .distinctUntilChanged()
+            .flatMapLatest { userId ->
                 if (userId != null) {
-                    val user = authRepository.getUserById(userId)
-                    if (user != null) {
-                        _authState.value = AuthenticationState.Authenticated(user)
-                    } else {
-                        _authState.value = AuthenticationState.NotAuthenticated
-                    }
+                    authRepository.observeUserById(userId)
+                } else {
+                    flowOf(null)
+                }
+            }
+            .onEach { user ->
+                if (user != null) {
+                    _authState.value = AuthenticationState.Authenticated(user)
                 } else {
                     _authState.value = AuthenticationState.NotAuthenticated
                 }

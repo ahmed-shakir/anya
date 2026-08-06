@@ -9,9 +9,12 @@ class FakeAuthRepository : AuthRepository {
     private val _currentUserId = MutableStateFlow<Long?>(null)
     private val users = mutableMapOf<Long, Owner>()
 
+    private val userFlows = mutableMapOf<Long, MutableStateFlow<Owner?>>()
+
     fun emitUser(user: Owner?) {
         if (user != null) {
             users[user.id] = user
+            userFlows[user.id]?.value = user
         }
         _currentUserId.value = user?.id
     }
@@ -21,6 +24,10 @@ class FakeAuthRepository : AuthRepository {
     override suspend fun getCurrentUserId(): Long? = _currentUserId.value
 
     override suspend fun getUserById(id: Long): Owner? = users[id]
+
+    override fun observeUserById(id: Long): Flow<Owner?> {
+        return userFlows.getOrPut(id) { MutableStateFlow(users[id]) }
+    }
 
     override suspend fun signIn(username: String): Result<Owner> {
         val user = users.values.find { it.username == username }
@@ -34,6 +41,7 @@ class FakeAuthRepository : AuthRepository {
 
     override suspend fun signUp(owner: Owner): Result<Owner> {
         users[owner.id] = owner
+        userFlows[owner.id]?.value = owner
         _currentUserId.value = owner.id
         return Result.success(owner)
     }

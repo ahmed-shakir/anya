@@ -10,6 +10,11 @@ interface AuthRepository {
     fun observeCurrentUserId(): Flow<Long?>
 
     /**
+     * Observe user by ID.
+     */
+    fun observeUserById(id: Long): Flow<Owner?>
+
+    /**
      * Get the currently authenticated user's ID synchronously (if possible/cached).
      */
     suspend fun getCurrentUserId(): Long?
