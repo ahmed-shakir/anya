@@ -29,8 +29,8 @@ import se.supernovait.anya.core.presentation.common.preview.ComponentPreviewCont
 import se.supernovait.anya.core.presentation.common.preview.PreviewData
 
 @Composable
-fun AddressForm(address: AddressState, onSaveRequest: (AddressState) -> Unit, onDismissRequest: () -> Unit) {
-    var state by mutableStateOf(address)
+fun AddressForm(initialAddress: AddressState, onSaveRequest: (AddressState) -> Unit, onDismissRequest: () -> Unit) {
+    var address by mutableStateOf(initialAddress)
     val a11yButtonText = stringResource(Res.string.a11y_button)
     val saveButtonLabel = stringResource(Res.string.save_action_label)
 
@@ -41,32 +41,32 @@ fun AddressForm(address: AddressState, onSaveRequest: (AddressState) -> Unit, on
         Column(verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
             AnyaTextField(
                 label = stringResource(Res.string.address_street_label),
-                initialValue = address.street,
-                onValueChange = { value, _ -> state = state.copy(street = value) }
+                initialValue = initialAddress.street,
+                onValueChange = { value, _ -> address = address.copy(street = value) }
             )
 
             AnyaTextField(
                 label = stringResource(Res.string.address_postal_code_label),
-                initialValue = address.postalCode,
-                onValueChange = { value, _ -> state = state.copy(postalCode = value) }
+                initialValue = initialAddress.postalCode,
+                onValueChange = { value, _ -> address = address.copy(postalCode = value) }
             )
 
             AnyaTextField(
                 label = stringResource(Res.string.address_city_label),
-                initialValue = address.city,
-                onValueChange = { value, _ -> state = state.copy(city = value) }
+                initialValue = initialAddress.city,
+                onValueChange = { value, _ -> address = address.copy(city = value) }
             )
 
             AnyaTextField(
                 label = stringResource(Res.string.address_county_label),
-                initialValue = address.county,
-                onValueChange = { value, _ -> state = state.copy(county = value) }
+                initialValue = initialAddress.county,
+                onValueChange = { value, _ -> address = address.copy(county = value) }
             )
 
             AnyaTextField(
                 label = stringResource(Res.string.address_country_label),
-                initialValue = address.country,
-                onValueChange = { value, _ -> state = state.copy(country = value) }
+                initialValue = initialAddress.country,
+                onValueChange = { value, _ -> address = address.copy(country = value) }
             )
 
             AnyaButton(
@@ -83,6 +83,6 @@ fun AddressForm(address: AddressState, onSaveRequest: (AddressState) -> Unit, on
 @Composable
 private fun Preview() {
     ComponentPreviewContainer {
-        AddressForm(address = PreviewData.address, onSaveRequest = { }, onDismissRequest = { })
+        AddressForm(initialAddress = PreviewData.address, onSaveRequest = { }, onDismissRequest = { })
     }
 }

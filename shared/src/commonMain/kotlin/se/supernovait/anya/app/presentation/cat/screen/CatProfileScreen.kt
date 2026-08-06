@@ -78,7 +78,7 @@ fun CatProfileScreen(
 
     if (uiState.showAddressForm) {
         AddressForm(
-            address = cat?.address ?: AddressState.empty,
+            initialAddress = cat?.address ?: AddressState.empty,
             onSaveRequest = { address ->
                 val catId = cat?.id ?: CatState.empty.id
                 onEvent(CatScreenEvent.SaveAddress(catId = catId, address = address))

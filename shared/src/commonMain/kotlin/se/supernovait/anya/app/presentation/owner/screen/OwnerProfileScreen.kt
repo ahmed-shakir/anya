@@ -75,7 +75,7 @@ fun OwnerProfileScreen(
 
     if (uiState.showAddressForm) {
         AddressForm(
-            address = owner?.address ?: AddressState.empty,
+            initialAddress = owner?.address ?: AddressState.empty,
             onSaveRequest = { address ->
                 val ownerId = owner?.id ?: OwnerState.empty.id
                 onEvent(OwnerScreenEvent.SaveAddress(ownerId = ownerId, address = address))
