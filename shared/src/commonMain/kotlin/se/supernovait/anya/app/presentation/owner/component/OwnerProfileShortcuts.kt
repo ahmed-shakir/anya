@@ -46,7 +46,7 @@ fun OwnerProfileShortcuts(
         ),
         ShortcutAction(
             icon = Res.drawable.ic_delete,
-            contentDescription = stringResource(Res.string.a11y_action_delete_content_description),
+            contentDescription = stringResource(Res.string.a11y_action_delete_content_description, owner.name),
             enabled = !owner.isPreview,
             onClick = { onEvent(OwnerScreenEvent.ConfirmDeleteOwner(owner)) }
         )
